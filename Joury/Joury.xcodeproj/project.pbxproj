@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		AE62AF382E023B63007FCF88 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = AE62AF372E023B63007FCF88 /* GoogleSignIn */; };
+		AE62AF3A2E023B63007FCF88 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AE62AF392E023B63007FCF88 /* GoogleSignInSwift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		AE62AF032E022CD5007FCF88 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE62AF382E023B63007FCF88 /* GoogleSignIn in Frameworks */,
+				AE62AF3A2E023B63007FCF88 /* GoogleSignInSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +119,8 @@
 			);
 			name = Joury;
 			packageProductDependencies = (
+				AE62AF372E023B63007FCF88 /* GoogleSignIn */,
+				AE62AF392E023B63007FCF88 /* GoogleSignInSwift */,
 			);
 			productName = Joury;
 			productReference = AE62AEF52E022CD4007FCF88 /* Joury.app */;
@@ -195,6 +204,9 @@
 			);
 			mainGroup = AE62AEEC2E022CD4007FCF88;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				AE62AF362E023B63007FCF88 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = AE62AEF62E022CD4007FCF88 /* Products */;
 			projectDirPath = "";
@@ -402,6 +414,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -432,6 +445,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -564,6 +578,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AE62AF362E023B63007FCF88 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AE62AF372E023B63007FCF88 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AE62AF362E023B63007FCF88 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		AE62AF392E023B63007FCF88 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AE62AF362E023B63007FCF88 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AE62AEED2E022CD4007FCF88 /* Project object */;
 }
