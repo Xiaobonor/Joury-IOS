@@ -126,41 +126,41 @@ class AnalyticsViewModel: ObservableObject {
         
         // Mock mood data
         moodData = [
-            MoodDataPoint(date: Date().addingTimeInterval(-6*24*60*60), mood: 6.5, label: "Mon"),
-            MoodDataPoint(date: Date().addingTimeInterval(-5*24*60*60), mood: 7.2, label: "Tue"),
-            MoodDataPoint(date: Date().addingTimeInterval(-4*24*60*60), mood: 5.8, label: "Wed"),
-            MoodDataPoint(date: Date().addingTimeInterval(-3*24*60*60), mood: 8.1, label: "Thu"),
-            MoodDataPoint(date: Date().addingTimeInterval(-2*24*60*60), mood: 7.5, label: "Fri"),
-            MoodDataPoint(date: Date().addingTimeInterval(-1*24*60*60), mood: 6.9, label: "Sat"),
-            MoodDataPoint(date: Date(), mood: 7.8, label: "Sun")
+            MoodDataPoint(date: Date().addingTimeInterval(-6*24*60*60), mood: 6.5, label: NSLocalizedString("weekday.monday", comment: "")),
+            MoodDataPoint(date: Date().addingTimeInterval(-5*24*60*60), mood: 7.2, label: NSLocalizedString("weekday.tuesday", comment: "")),
+            MoodDataPoint(date: Date().addingTimeInterval(-4*24*60*60), mood: 5.8, label: NSLocalizedString("weekday.wednesday", comment: "")),
+            MoodDataPoint(date: Date().addingTimeInterval(-3*24*60*60), mood: 8.1, label: NSLocalizedString("weekday.thursday", comment: "")),
+            MoodDataPoint(date: Date().addingTimeInterval(-2*24*60*60), mood: 7.5, label: NSLocalizedString("weekday.friday", comment: "")),
+            MoodDataPoint(date: Date().addingTimeInterval(-1*24*60*60), mood: 6.9, label: NSLocalizedString("weekday.saturday", comment: "")),
+            MoodDataPoint(date: Date(), mood: 7.8, label: NSLocalizedString("weekday.sunday", comment: ""))
         ]
         
         // Mock habits performance
         habitsPerformance = [
             HabitPerformance(
                 id: "1",
-                name: "Morning Exercise",
+                name: NSLocalizedString("analytics.habit.morning_exercise", comment: ""),
                 completedDays: 5,
                 totalDays: 7,
                 completionRate: 0.71
             ),
             HabitPerformance(
                 id: "2",
-                name: "Daily Reading",
+                name: NSLocalizedString("analytics.habit.daily_reading", comment: ""),
                 completedDays: 6,
                 totalDays: 7,
                 completionRate: 0.86
             ),
             HabitPerformance(
                 id: "3",
-                name: "Meditation",
+                name: NSLocalizedString("analytics.habit.meditation", comment: ""),
                 completedDays: 4,
                 totalDays: 7,
                 completionRate: 0.57
             ),
             HabitPerformance(
                 id: "4",
-                name: "Journal Writing",
+                name: NSLocalizedString("analytics.habit.journal_writing", comment: ""),
                 completedDays: 7,
                 totalDays: 7,
                 completionRate: 1.0
@@ -171,20 +171,26 @@ class AnalyticsViewModel: ObservableObject {
         habitsCompletionRate = habitsPerformance.map { $0.completionRate }.reduce(0, +) / Double(habitsPerformance.count)
         
         // Mock insights
-        topKeywords = ["work", "exercise", "family", "reading", "grateful"]
-        emotionalInsight = "This week showed a generally positive emotional trend with some midweek stress. Your mood improved significantly toward the weekend, likely due to consistent exercise and quality time with family."
+        topKeywords = [
+            NSLocalizedString("keyword.work", comment: ""),
+            NSLocalizedString("keyword.exercise", comment: ""),
+            NSLocalizedString("keyword.family", comment: ""),
+            NSLocalizedString("keyword.reading", comment: ""),
+            NSLocalizedString("keyword.grateful", comment: "")
+        ]
+        emotionalInsight = NSLocalizedString("analytics.emotional_insight_sample", comment: "")
         
         // Mock weekly report
         weeklyReport = WeeklyReport(
-            title: "Week 42 Personal Growth Report",
-            dateRange: "Oct 16 - Oct 22, 2024",
-            summary: "This week demonstrated strong commitment to personal growth with notable improvements in habit consistency and emotional well-being. Your journaling practice has been particularly insightful, revealing patterns of growth and self-awareness.",
+            title: NSLocalizedString("analytics.weekly_report_title", comment: ""),
+            dateRange: NSLocalizedString("analytics.weekly_report_date", comment: ""),
+            summary: NSLocalizedString("analytics.weekly_report_summary", comment: ""),
             highlights: [
-                "100% journal completion",
-                "86% habit consistency",
-                "Mood trend: Positive ↗️"
+                NSLocalizedString("analytics.highlight.journal_completion", comment: ""),
+                NSLocalizedString("analytics.highlight.habit_consistency", comment: ""),
+                NSLocalizedString("analytics.highlight.mood_trend", comment: "")
             ],
-            aiInsights: "Your consistent morning routine appears to be a key factor in maintaining positive mood levels. Consider exploring meditation techniques to handle midweek stress more effectively.",
+            aiInsights: NSLocalizedString("analytics.ai_insights_sample", comment: ""),
             generatedAt: Date()
         )
         

@@ -132,15 +132,15 @@ struct PomodoroTimerView: View {
             VStack(spacing: 12) {
                 HStack {
                     Text("focus.session".localized)
-                        .font(.subheadline)
+                        .font(.caption)
                         .foregroundColor(themeManager.colors.textSecondary)
                     
                     Spacer()
                     
                     Text("\(viewModel.completedSessions)/\(viewModel.targetSessions)")
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                        .foregroundColor(themeManager.colors.primary)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(themeManager.colors.textPrimary)
                 }
                 
                 ProgressView(value: Double(viewModel.completedSessions), total: Double(viewModel.targetSessions))
@@ -292,7 +292,7 @@ struct FocusRoomCardView: View {
                         .font(.caption)
                         .foregroundColor(themeManager.colors.textSecondary)
                     
-                    Text("\(room.participantCount) active")
+                    Text(String(format: "focus.participants_active".localized, room.participantCount))
                         .font(.caption)
                         .foregroundColor(themeManager.colors.textSecondary)
                 }
@@ -419,16 +419,16 @@ struct WeeklyFocusChartView: View {
     var body: some View {
         VStack {
             HStack(alignment: .bottom, spacing: 12) {
-                ForEach(0..<7) { index in
+                ForEach(Array(data.enumerated()), id: \.offset) { index, value in
                     VStack(spacing: 4) {
-                        Rectangle()
-                            .fill(themeManager.colors.primary)
-                            .frame(width: 30, height: CGFloat(data[index]) * 3)
-                            .cornerRadius(4)
-                        
-                        Text(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][index])
+                        Text(NSLocalizedString("weekday.\(["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"][index])", comment: ""))
                             .font(.caption2)
                             .foregroundColor(themeManager.colors.textSecondary)
+                        
+                        Rectangle()
+                            .fill(value > 0 ? themeManager.colors.primary : themeManager.colors.surface)
+                            .frame(width: 20, height: CGFloat(max(4, value * 50)))
+                            .cornerRadius(2)
                     }
                 }
             }

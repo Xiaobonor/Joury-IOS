@@ -46,7 +46,7 @@ struct AuthenticationView: View {
                                 .font(.system(size: 32, weight: .bold, design: .rounded))
                                 .foregroundColor(themeManager.colors.textPrimary)
                             
-                            Text("welcome_subtitle".localized)
+                            Text(NSLocalizedString("auth.welcome_subtitle", comment: "Your AI companion for personal growth and reflection"))
                                 .font(.system(size: 16, weight: .medium))
                                 .foregroundColor(themeManager.colors.textSecondary)
                                 .multilineTextAlignment(.center)
@@ -138,7 +138,7 @@ struct AuthenticationView: View {
                     Spacer()
                     
                     // Privacy notice
-                    Text("privacy_notice".localized)
+                                            Text("auth.privacy_notice".localized)
                         .font(.system(size: 12))
                         .foregroundColor(themeManager.colors.textSecondary)
                         .multilineTextAlignment(.center)
@@ -147,8 +147,8 @@ struct AuthenticationView: View {
                 }
             }
         }
-        .alert("Error", isPresented: $showErrorAlert) {
-            Button("general.ok".localized) {
+        .alert(NSLocalizedString("general.error", comment: "Error"), isPresented: $showErrorAlert) {
+            Button(NSLocalizedString("general.ok", comment: "OK")) {
                 showErrorAlert = false
             }
         } message: {

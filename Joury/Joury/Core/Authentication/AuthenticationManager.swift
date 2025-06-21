@@ -82,15 +82,15 @@ enum AuthenticationError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidCredentials:
-            return "errors.invalid_credentials".localized
+            return NSLocalizedString("errors.invalid_credentials", comment: "")
         case .networkError:
-            return "errors.network_error".localized
+            return NSLocalizedString("errors.network_error", comment: "")
         case .tokenExpired:
-            return "errors.token_expired".localized
+            return NSLocalizedString("errors.token_expired", comment: "")
         case .googleAuthFailed:
-            return "errors.google_auth_failed".localized
+            return NSLocalizedString("errors.google_auth_failed", comment: "")
         case .keychainError:
-            return "errors.keychain_error".localized
+            return NSLocalizedString("errors.keychain_error", comment: "")
         case .unknown(let message):
             return message
         }

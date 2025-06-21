@@ -16,6 +16,7 @@ class JournalViewModel: ObservableObject {
     @Published var currentMoodScore: Double?
     @Published var extractedTasks: [String] = []
     @Published var errorMessage: String?
+    @Published var todayJournalText: String?
     
     // MARK: - Private Properties
     private let networkManager = NetworkManager.shared
@@ -38,6 +39,7 @@ class JournalViewModel: ObservableObject {
             messages = journal.messages
             currentMoodScore = journal.latestMoodScore
             extractedTasks = journal.extractedTasks
+            todayJournalText = journal.traditionalContent
             
         } catch {
             errorMessage = error.localizedDescription
@@ -50,7 +52,7 @@ class JournalViewModel: ObservableObject {
     /// Send a message to the AI and handle the response
     func sendMessage(_ content: String) async {
         guard let journalId = currentJournalId else {
-            errorMessage = "No active journal session"
+            errorMessage = NSLocalizedString("journal.no_active_session", comment: "")
             return
         }
         
@@ -95,7 +97,7 @@ class JournalViewModel: ObservableObject {
             // Add fallback response
             let fallbackMessage = JournalMessage(
                 id: UUID().uuidString,
-                content: "I'm sorry, I'm having trouble responding right now. Please try again.",
+                content: NSLocalizedString("journal.fallback_response", comment: ""),
                 isFromUser: false,
                 timestamp: Date()
             )
@@ -111,12 +113,45 @@ class JournalViewModel: ObservableObject {
         } catch {
             print("Failed to fetch reflection questions: \(error)")
             return [
-                "How are you feeling right now?",
-                "What's been on your mind today?",
-                "What are you grateful for?",
-                "What would you like to focus on?"
+                NSLocalizedString("journal.reflection.feeling_now", comment: ""),
+                NSLocalizedString("journal.reflection.mind_today", comment: ""),
+                NSLocalizedString("journal.reflection.grateful_for", comment: ""),
+                NSLocalizedString("journal.reflection.focus_on", comment: "")
             ]
         }
+    }
+    
+    /// Save traditional journal entry
+    func saveTraditionalEntry(_ content: String) async {
+        guard !content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return
+        }
+        
+        isLoading = true
+        errorMessage = nil
+        
+        do {
+            let today = Date().toDateString()
+            let response = try await saveTraditionalJournalEntry(content: content, date: today)
+            
+            // Update local state
+            todayJournalText = content
+            currentJournalId = response.journalId
+            
+            if let mood = response.moodAnalysis {
+                currentMoodScore = mood.moodScore
+            }
+            
+            if !response.extractedTasks.isEmpty {
+                extractedTasks = response.extractedTasks
+            }
+            
+        } catch {
+            errorMessage = error.localizedDescription
+            print("Failed to save traditional journal entry: \(error)")
+        }
+        
+        isLoading = false
     }
     
     /// Clear current session (for testing or logout)
@@ -126,6 +161,7 @@ class JournalViewModel: ObservableObject {
         currentMoodScore = nil
         extractedTasks.removeAll()
         errorMessage = nil
+        todayJournalText = nil
     }
 }
 
@@ -177,6 +213,20 @@ private extension JournalViewModel {
         
         return response.questions
     }
+    
+    func saveTraditionalJournalEntry(content: String, date: String) async throws -> TraditionalJournalResponse {
+        let endpoint = "journals/traditional"
+        let body = TraditionalJournalRequest(content: content, date: date)
+        
+        let response: TraditionalJournalResponse = try await networkManager.request(
+            endpoint: endpoint,
+            method: .POST,
+            body: body,
+            responseType: TraditionalJournalResponse.self
+        ).asyncValue()
+        
+        return response
+    }
 }
 
 // MARK: - Data Models
@@ -194,6 +244,7 @@ struct JournalResponse: Codable {
     let messages: [JournalMessage]
     let latestMoodScore: Double?
     let extractedTasks: [String]
+    let traditionalContent: String?
     let createdAt: String
     let updatedAt: String
 }
@@ -219,6 +270,18 @@ struct MoodAnalysisResponse: Codable {
 
 struct ReflectionQuestionsResponse: Codable {
     let questions: [String]
+}
+
+struct TraditionalJournalRequest: Codable {
+    let content: String
+    let date: String
+}
+
+struct TraditionalJournalResponse: Codable {
+    let journalId: String
+    let moodAnalysis: MoodAnalysisResponse?
+    let extractedTasks: [String]
+    let aiSuggestions: [String]
 }
 
 // MARK: - Helper Extensions

@@ -2,24 +2,32 @@
 //  Publisher+Async.swift
 //  Joury
 //
-//  Extension to convert Combine publishers to async/await
+//  Created by HongCheng on 2024/1/18.
 //
 
 import Foundation
 import Combine
 
+// MARK: - Publisher to Async/Await
 extension Publisher {
-    /// Converts a Combine publisher to async/await
+    
+    /// Converts a Combine Publisher into an async/await compatible function.
+    ///
+    /// This extension allows you to await the result of any Publisher, making it easy to integrate
+    /// Combine-based APIs (like NetworkManager) with modern Swift concurrency.
+    ///
+    /// - Returns: The first value emitted by the publisher.
+    /// - Throws: An error if the publisher completes with a failure.
     func asyncValue() async throws -> Output {
-        return try await withCheckedThrowingContinuation { continuation in
+        try await withCheckedThrowingContinuation { continuation in
             var cancellable: AnyCancellable?
             
-            cancellable = self
+            cancellable = first()
                 .sink(
                     receiveCompletion: { completion in
                         switch completion {
                         case .finished:
-                            break
+                            break // Successful completion, no value needed for continuation
                         case .failure(let error):
                             continuation.resume(throwing: error)
                         }
@@ -27,7 +35,6 @@ extension Publisher {
                     },
                     receiveValue: { value in
                         continuation.resume(returning: value)
-                        cancellable?.cancel()
                     }
                 )
         }

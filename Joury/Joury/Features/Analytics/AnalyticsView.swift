@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AnalyticsView: View {
     @EnvironmentObject private var themeManager: ThemeManager
+    @EnvironmentObject private var localizationManager: LocalizationManager
     @StateObject private var viewModel = AnalyticsViewModel()
     @State private var selectedTimeRange: TimeRange = .week
     
@@ -39,7 +40,7 @@ struct AnalyticsView: View {
                 .padding(.vertical, 20)
             }
             .background(themeManager.colors.background)
-            .navigationTitle("analytics.analytics".localized)
+            .navigationTitle(localizationManager.string(for: "analytics.analytics"))
             .navigationBarTitleDisplayMode(.large)
             .refreshable {
                 viewModel.loadAnalytics(for: selectedTimeRange)
@@ -58,7 +59,7 @@ struct AnalyticsView: View {
                     selectedTimeRange = range
                     viewModel.loadAnalytics(for: range)
                 }) {
-                    Text(range.title)
+                    Text(localizationManager.string(for: range.localizationKey))
                         .font(.subheadline)
                         .fontWeight(.medium)
                         .foregroundColor(selectedTimeRange == range ? .white : themeManager.colors.textSecondary)
@@ -78,44 +79,46 @@ struct AnalyticsView: View {
     // MARK: - Overview Section
     private var overviewSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("analytics.overview".localized)
+            Text(localizationManager.string(for: "analytics.overview"))
                 .font(.headline)
                 .foregroundColor(themeManager.colors.textPrimary)
                 .padding(.horizontal, 20)
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 16) {
-                    OverviewCardView(
-                        title: "analytics.journalEntries".localized,
-                        value: "\(viewModel.overview.journalEntries)",
-                        change: viewModel.overview.journalEntriesChange,
-                        icon: "book.fill",
-                        color: themeManager.colors.primary
-                    )
-                    
-                    OverviewCardView(
-                        title: "analytics.avgMood".localized,
-                        value: String(format: "%.1f", viewModel.overview.averageMood),
-                        change: viewModel.overview.moodChange,
-                        icon: "heart.fill",
-                        color: themeManager.colors.warning
-                    )
-                    
-                    OverviewCardView(
-                        title: "analytics.habitsCompleted".localized,
-                        value: "\(viewModel.overview.habitsCompleted)",
-                        change: viewModel.overview.habitsChange,
-                        icon: "checkmark.circle.fill",
-                        color: themeManager.colors.success
-                    )
-                    
-                    OverviewCardView(
-                        title: "analytics.focusMinutes".localized,
-                        value: "\(viewModel.overview.focusMinutes)",
-                        change: viewModel.overview.focusChange,
-                        icon: "timer.circle.fill",
-                        color: themeManager.colors.secondary
-                    )
+                    HStack(spacing: 20) {
+                        OverviewCardView(
+                            titleKey: "analytics.journal_entries",
+                            value: "\(viewModel.overview.journalEntries)",
+                            subtitle: String(format: localizationManager.string(for: "analytics.overview.journal_subtitle"), 2),
+                            icon: "book.fill",
+                            color: themeManager.colors.primary
+                        )
+                        
+                        OverviewCardView(
+                            titleKey: "analytics.avg_mood",
+                            value: String(format: "%.1f", viewModel.overview.averageMood),
+                            subtitle: String(format: localizationManager.string(for: "analytics.overview.mood_subtitle"), "+0.3"),
+                            icon: "heart.fill",
+                            color: themeManager.colors.success
+                        )
+                        
+                        OverviewCardView(
+                            titleKey: "analytics.habits_completed",
+                            value: "\(viewModel.overview.habitsCompleted)",
+                            subtitle: String(format: localizationManager.string(for: "common.percent"), 85),
+                            icon: "checkmark.circle.fill",
+                            color: themeManager.colors.warning
+                        )
+                        
+                        OverviewCardView(
+                            titleKey: "analytics.focus_minutes",
+                            value: "\(viewModel.overview.focusMinutes)",
+                            subtitle: String(format: localizationManager.string(for: "analytics.overview.focus_subtitle"), "+15"),
+                            icon: "timer.circle.fill",
+                            color: themeManager.colors.info
+                        )
+                    }
                 }
                 .padding(.horizontal, 20)
             }
@@ -126,14 +129,14 @@ struct AnalyticsView: View {
     private var moodTrendsSection: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
-                Text("analytics.moodTrends".localized)
+                Text(localizationManager.string(for: "analytics.mood_trends"))
                     .font(.headline)
                     .foregroundColor(themeManager.colors.textPrimary)
                 
                 Spacer()
                 
                 Button(action: { viewModel.showMoodDetails() }) {
-                    Text("analytics.seeDetails".localized)
+                    Text(localizationManager.string(for: "analytics.see_details"))
                         .font(.caption)
                         .foregroundColor(themeManager.colors.primary)
                 }
@@ -150,13 +153,13 @@ struct AnalyticsView: View {
     private var habitsPerformanceSection: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
-                Text("analytics.habitsPerformance".localized)
+                Text(localizationManager.string(for: "analytics.habits_performance"))
                     .font(.headline)
                     .foregroundColor(themeManager.colors.textPrimary)
                 
                 Spacer()
                 
-                Text("\(Int(viewModel.habitsCompletionRate * 100))% completed")
+                Text(String(format: localizationManager.string(for: "analytics.percent_completed"), Int(viewModel.habitsCompletionRate * 100)))
                     .font(.caption)
                     .foregroundColor(themeManager.colors.textSecondary)
             }
@@ -174,7 +177,7 @@ struct AnalyticsView: View {
     // MARK: - Journal Insights Section
     private var journalInsightsSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("analytics.journalInsights".localized)
+            Text(localizationManager.string(for: "analytics.journal_insights"))
                 .font(.headline)
                 .foregroundColor(themeManager.colors.textPrimary)
                 .padding(.horizontal, 20)
@@ -182,7 +185,7 @@ struct AnalyticsView: View {
             VStack(spacing: 12) {
                 // Top Keywords
                 InsightCardView(
-                    title: "analytics.topKeywords".localized,
+                    titleKey: "analytics.top_keywords",
                     content: viewModel.topKeywords.joined(separator: " • "),
                     icon: "text.bubble.fill"
                 )
@@ -190,7 +193,7 @@ struct AnalyticsView: View {
                 
                 // Emotional Insights
                 InsightCardView(
-                    title: "analytics.emotionalInsights".localized,
+                    titleKey: "analytics.emotional_insights",
                     content: viewModel.emotionalInsight,
                     icon: "brain.head.profile"
                 )
@@ -202,7 +205,7 @@ struct AnalyticsView: View {
     // MARK: - Weekly Report Section
     private var weeklyReportSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("analytics.weeklyReport".localized)
+            Text(localizationManager.string(for: "analytics.weekly_report"))
                 .font(.headline)
                 .foregroundColor(themeManager.colors.textPrimary)
                 .padding(.horizontal, 20)
@@ -221,24 +224,25 @@ enum TimeRange: String, CaseIterable {
     case month = "month"
     case quarter = "quarter"
     
-    var title: String {
+    var localizationKey: String {
         switch self {
-        case .week: return "analytics.week".localized
-        case .month: return "analytics.month".localized
-        case .quarter: return "analytics.quarter".localized
+        case .week: return "analytics.week"
+        case .month: return "analytics.month"
+        case .quarter: return "analytics.quarter"
         }
     }
 }
 
 // MARK: - Overview Card View
 struct OverviewCardView: View {
-    let title: String
+    let titleKey: String
     let value: String
-    let change: Double
+    let subtitle: String
     let icon: String
     let color: Color
     
     @EnvironmentObject private var themeManager: ThemeManager
+    @EnvironmentObject private var localizationManager: LocalizationManager
     
     var body: some View {
         VStack(spacing: 12) {
@@ -246,34 +250,27 @@ struct OverviewCardView: View {
                 Image(systemName: icon)
                     .foregroundColor(color)
                 
-                Spacer()
-                
-                HStack(spacing: 4) {
-                    Image(systemName: change >= 0 ? "arrow.up" : "arrow.down")
-                        .font(.caption)
-                    
-                    Text("\(abs(change), specifier: "%.1f")%")
-                        .font(.caption)
-                }
-                .foregroundColor(change >= 0 ? themeManager.colors.success : themeManager.colors.error)
-            }
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text(value)
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundColor(themeManager.colors.textPrimary)
-                
-                Text(title)
+                Text(localizationManager.string(for: titleKey))
                     .font(.caption)
                     .foregroundColor(themeManager.colors.textSecondary)
+                
+                Spacer()
             }
+            
+            Text(value)
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(themeManager.colors.textPrimary)
+            
+            Text(subtitle)
+                .font(.caption2)
+                .foregroundColor(themeManager.colors.textSecondary)
         }
         .padding(16)
-        .frame(width: 140, height: 100)
+        .frame(width: 160, height: 140)
         .background(themeManager.colors.surface)
-        .cornerRadius(12)
-        .shadow(color: themeManager.colors.textPrimary.opacity(0.1), radius: 2, x: 0, y: 1)
+        .cornerRadius(16)
+        .shadow(color: themeManager.colors.shadow.opacity(0.05), radius: 10, x: 0, y: 5)
     }
 }
 
@@ -373,72 +370,51 @@ struct MoodTrendChartView: View {
 // MARK: - Habit Performance Row View
 struct HabitPerformanceRowView: View {
     let habit: HabitPerformance
+    
     @EnvironmentObject private var themeManager: ThemeManager
+    @EnvironmentObject private var localizationManager: LocalizationManager
     
     var body: some View {
         HStack {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(habit.name)
-                    .font(.subheadline)
-                    .fontWeight(.medium)
-                    .foregroundColor(themeManager.colors.textPrimary)
-                
-                Text("\(habit.completedDays)/\(habit.totalDays) days")
-                    .font(.caption)
-                    .foregroundColor(themeManager.colors.textSecondary)
-            }
+            Text(habit.name)
+                .font(.subheadline)
+                .foregroundColor(themeManager.colors.textPrimary)
             
             Spacer()
             
-            VStack(alignment: .trailing, spacing: 4) {
-                Text("\(Int(habit.completionRate * 100))%")
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundColor(themeManager.colors.textPrimary)
-                
-                ProgressView(value: habit.completionRate)
-                    .progressViewStyle(LinearProgressViewStyle(tint: themeManager.colors.primary))
-                    .frame(width: 60)
-                    .scaleEffect(x: 1, y: 2, anchor: .center)
-            }
+            Text(String(format: localizationManager.string(for: "analytics.completed_days"), habit.completedDays, habit.totalDays))
+                .font(.caption)
+                .foregroundColor(themeManager.colors.textSecondary)
         }
-        .padding(12)
-        .background(themeManager.colors.surface)
-        .cornerRadius(8)
     }
 }
 
 // MARK: - Insight Card View
 struct InsightCardView: View {
-    let title: String
+    let titleKey: String
     let content: String
     let icon: String
     
     @EnvironmentObject private var themeManager: ThemeManager
+    @EnvironmentObject private var localizationManager: LocalizationManager
     
     var body: some View {
-        HStack(spacing: 12) {
-            Image(systemName: icon)
-                .font(.title2)
-                .foregroundColor(themeManager.colors.primary)
-                .frame(width: 30)
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text(title)
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Image(systemName: icon)
+                    .foregroundColor(themeManager.colors.primary)
+                Text(localizationManager.string(for: titleKey))
                     .font(.subheadline)
-                    .fontWeight(.medium)
+                    .fontWeight(.semibold)
                     .foregroundColor(themeManager.colors.textPrimary)
-                
-                Text(content)
-                    .font(.caption)
-                    .foregroundColor(themeManager.colors.textSecondary)
-                    .lineLimit(3)
-                    .multilineTextAlignment(.leading)
             }
-            
-            Spacer()
+            Text(content)
+                .font(.body)
+                .foregroundColor(themeManager.colors.textSecondary)
+                .lineLimit(3)
         }
-        .padding(16)
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(themeManager.colors.surface)
         .cornerRadius(12)
     }
@@ -447,55 +423,56 @@ struct InsightCardView: View {
 // MARK: - Weekly Report Card View
 struct WeeklyReportCardView: View {
     let report: WeeklyReport
+    
     @EnvironmentObject private var themeManager: ThemeManager
+    @EnvironmentObject private var localizationManager: LocalizationManager
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(report.title)
-                        .font(.headline)
-                        .foregroundColor(themeManager.colors.textPrimary)
-                    
-                    Text(report.dateRange)
-                        .font(.caption)
-                        .foregroundColor(themeManager.colors.textSecondary)
-                }
-                
-                Spacer()
-                
-                Button(action: { /* Open detailed report */ }) {
-                    Image(systemName: "arrow.up.right")
-                        .foregroundColor(themeManager.colors.primary)
-                }
-            }
+        VStack(alignment: .leading, spacing: 12) {
+            Text(report.title)
+                .font(.headline)
+                .foregroundColor(themeManager.colors.textPrimary)
+            
+            Text(report.dateRange)
+                .font(.caption)
+                .foregroundColor(themeManager.colors.textSecondary)
+            
+            Divider()
             
             Text(report.summary)
-                .font(.subheadline)
-                .foregroundColor(themeManager.colors.textPrimary)
-                .lineLimit(4)
+                .font(.body)
+                .foregroundColor(themeManager.colors.textSecondary)
             
-            HStack {
+            VStack(alignment: .leading, spacing: 8) {
                 ForEach(report.highlights, id: \.self) { highlight in
-                    Text("• \(highlight)")
-                        .font(.caption)
-                        .foregroundColor(themeManager.colors.textSecondary)
+                    HStack {
+                        Image(systemName: "star.fill")
+                            .foregroundColor(themeManager.colors.warning)
+                        Text(highlight)
+                            .font(.subheadline)
+                    }
                 }
             }
+            .foregroundColor(themeManager.colors.textPrimary)
+            
+            Divider()
+            
+            HStack {
+                Image(systemName: "lightbulb.fill")
+                    .foregroundColor(themeManager.colors.primary)
+                Text(localizationManager.string(for: "analytics.insights"))
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(themeManager.colors.textPrimary)
+            }
+            
+            Text(report.aiInsights)
+                .font(.body)
+                .foregroundColor(themeManager.colors.textSecondary)
         }
-        .padding(16)
-        .background(
-            LinearGradient(
-                colors: [themeManager.colors.primary.opacity(0.1), themeManager.colors.secondary.opacity(0.1)],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-        )
+        .padding()
+        .background(themeManager.colors.surface)
         .cornerRadius(12)
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(themeManager.colors.primary.opacity(0.3), lineWidth: 1)
-        )
     }
 }
 

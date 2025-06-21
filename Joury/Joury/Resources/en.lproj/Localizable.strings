@@ -1,0 +1,536 @@
+/* 
+   Localizable.strings (English)
+   Joury
+   
+   English localization for Joury iOS app
+*/
+
+// MARK: - General
+"general.app_name" = "Joury";
+"general.ok" = "OK";
+"general.cancel" = "Cancel";
+"general.save" = "Save";
+"general.delete" = "Delete";
+"general.edit" = "Edit";
+"general.done" = "Done";
+"general.back" = "Back";
+"general.next" = "Next";
+"general.skip" = "Skip";
+"general.retry" = "Retry";
+"general.loading" = "Loading...";
+"general.error" = "Error";
+"general.success" = "Success";
+"general.warning" = "Warning";
+"general.info" = "Info";
+
+// MARK: - Common
+"common.back" = "Back";
+"common.ok" = "OK";
+"common.cancel" = "Cancel";
+"common.save" = "Save";
+"common.delete" = "Delete";
+"common.edit" = "Edit";
+"common.done" = "Done";
+"common.next" = "Next";
+"common.skip" = "Skip";
+"common.retry" = "Retry";
+"common.loading" = "Loading...";
+"common.error" = "Error";
+"common.success" = "Success";
+"common.warning" = "Warning";
+"common.info" = "Info";
+"common.sign_in" = "Sign In";
+"common.sign_out" = "Sign Out";
+"common.guest" = "Guest";
+"common.guest_email" = "guest@joury.app";
+"common.percent" = "%d%%";
+
+// MARK: - Authentication
+"auth.sign_in" = "Sign In";
+"auth.sign_out" = "Sign Out";
+"auth.sign_in_with_google" = "Continue with Google";
+"auth.continue_as_guest" = "Continue as Guest";
+"auth.welcome" = "Welcome to Joury";
+"auth.welcome_message" = "Your personal growth companion";
+"auth.welcome_subtitle" = "Your AI companion for personal growth and reflection";
+"auth.privacy_notice" = "By continuing, you agree to our Privacy Policy and Terms of Service. Your data is secure and private.";
+"auth.sign_in_required" = "Sign In Required";
+"auth.sign_in_required_message" = "Please sign in to access this feature";
+"auth.guest" = "Guest";
+"auth.guest_email" = "guest@joury.app";
+
+// MARK: - Language
+"language.en" = "English";
+"language.zh_tw" = "Traditional Chinese";
+
+// MARK: - Theme
+"theme.light" = "Light";
+"theme.dark" = "Dark";
+"theme.auto" = "Auto";
+
+// MARK: - Journal
+"journal.journal" = "Journal";
+"journal.today" = "Today's Journal";
+"journal.write" = "Write Journal";
+"journal.ai_greeting" = "Hi! How was your day today?";
+"journal.ai_question" = "What would you like to reflect on?";
+"journal.your_thoughts" = "Share your thoughts...";
+"journal.add_photo" = "Add Photo";
+"journal.add_voice" = "Add Voice";
+"journal.mood_today" = "How are you feeling today?";
+"journal.reflection_prompt" = "What's on your mind?";
+"journal.entry_created" = "Journal entry created";
+"journal.entry_updated" = "Journal entry updated";
+"journal.entry_deleted" = "Journal entry deleted";
+"journal.quick_action_day_question" = "How was your day?";
+"journal.quick_action_gratitude" = "What am I grateful for?";
+"journal.quick_action_mind" = "What's on my mind?";
+"journal.quick_action_goals" = "Goals for tomorrow";
+"journal.quick_action_day_response" = "How was your day?";
+"journal.quick_action_gratitude_response" = "What am I grateful for today?";
+"journal.quick_action_mind_response" = "What's on my mind right now?";
+"journal.quick_action_goals_response" = "What are my goals for tomorrow?";
+"journal.fallback_response" = "I'm sorry, I'm having trouble responding right now. Please try again.";
+"journal.reflection.feeling_now" = "How are you feeling right now?";
+"journal.reflection.mind_today" = "What's been on your mind today?";
+"journal.reflection.grateful_for" = "What are you grateful for?";
+"journal.reflection.focus_on" = "What would you like to focus on?";
+
+// MARK: - New Journal Interface
+"journal.greeting.morning" = "Good Morning";
+"journal.greeting.afternoon" = "Good Afternoon";
+"journal.greeting.evening" = "Good Evening";
+"journal.greeting.night" = "Good Night";
+
+"journal.today.status" = "Today's Journal";
+"journal.today.written" = "You've written today";
+"journal.today.not_written" = "Not written yet";
+"journal.continue" = "Continue";
+"journal.mood.today" = "Today's mood";
+
+"journal.quick.traditional" = "Free Write";
+"journal.quick.traditional.subtitle" = "Express yourself freely";
+"journal.quick.interactive" = "Guided Chat";
+"journal.quick.interactive.subtitle" = "AI-guided reflection";
+
+"journal.recent.entries" = "Recent Entries";
+"journal.view.all" = "View All";
+"journal.history" = "History";
+"journal.new.entry" = "New Entry";
+
+"journal.mode.selection" = "Choose Writing Mode";
+"journal.mode.selection.subtitle" = "How would you like to journal today?";
+
+"journal.empty.title" = "Your Journey Begins";
+"journal.empty.subtitle" = "Start writing to capture your thoughts and feelings";
+
+// MARK: - Habits
+"habits.habits" = "Habits";
+"habits.my_habits" = "My Habits";
+"habits.add_habit" = "Add Habit";
+"habits.edit_habit" = "Edit Habit";
+"habits.habit_name" = "Habit Name";
+"habits.habit_description" = "Description";
+"habits.habit_frequency" = "Frequency";
+"habits.habit_target" = "Target";
+"habits.daily" = "Daily";
+"habits.weekly" = "Weekly";
+"habits.monthly" = "Monthly";
+"habits.completed" = "Completed";
+"habits.incomplete" = "Incomplete";
+"habits.streak" = "Streak";
+"habits.habit_completed" = "Habit completed!";
+"habits.ai_suggestion" = "AI Suggestion";
+"habits.daily_journal" = "Daily Journal";
+"habits.morning_meditation" = "Morning Meditation";
+"habits.gratitude_practice" = "Gratitude Practice";
+"habits.journal_desc" = "Reflect on your day and thoughts";
+"habits.meditation_desc" = "Start your day with mindfulness";
+"habits.gratitude_desc" = "Count your blessings and appreciate life";
+"habits.today_progress" = "Today's Progress";
+"habits.daily_progress" = "%d of %d completed";
+"habits.weekly_percent" = "%d%% this week";
+"habits.empty_title" = "No Habits Yet";
+"habits.empty_message" = "Start building positive habits to improve your daily routine and personal growth.";
+"habits.create_first" = "Create Your First Habit";
+"habits.weekly_progress" = "Weekly Progress";
+"habits.name" = "Name";
+"habits.description" = "Description";
+"habits.frequency" = "Frequency";
+"habits.name_placeholder" = "Enter habit name";
+"habits.description_placeholder" = "Enter habit description";
+"habits.create" = "Create Habit";
+
+// MARK: - Focus
+"focus.focus" = "Focus";
+"focus.focus_mode" = "Focus Mode";
+"focus.pomodoro_timer" = "Pomodoro Timer";
+"focus.start_focus" = "Start Focus Session";
+"focus.stop_focus" = "Stop Focus";
+"focus.pause_focus" = "Pause Focus";
+"focus.resume_focus" = "Resume Focus";
+"focus.focus_complete" = "Focus Session Complete";
+"focus.break_time" = "Break Time";
+"focus.join_room" = "Join Room";
+"focus.create_room" = "Create Room";
+"focus.room_name" = "Room Name";
+"focus.participants" = "Participants";
+"focus.focus_stats" = "Focus Statistics";
+"focus.available_rooms" = "Available Rooms";
+"focus.create_first_room" = "Create your first focus room to study with others";
+"focus.timer" = "Timer";
+"focus.rooms" = "Rooms";
+"focus.stats" = "Stats";
+"focus.session" = "Session";
+"focus.no_rooms" = "No Rooms Available";
+"focus.participants_active" = "%d participants active";
+"focus.join" = "Join";
+"focus.today_stats" = "Today's Stats";
+"focus.sessions" = "Sessions";
+"focus.minutes" = "Minutes";
+"focus.weekly_overview" = "Weekly Overview";
+"focus.achievements" = "Achievements";
+"focus.room_description" = "Room Description";
+"focus.room_name_placeholder" = "Enter room name";
+"focus.room_description_placeholder" = "Enter room description";
+"focus.roomNamePlaceholder" = "Enter room name";
+"focus.roomDescriptionPlaceholder" = "Enter room description";
+
+// MARK: - Focus Achievements
+"focus.achievement.first_focus" = "First Focus";
+"focus.achievement.first_focus_desc" = "Complete your first focus session";
+"focus.achievement.daily_hero" = "Daily Hero";
+"focus.achievement.daily_hero_desc" = "Complete 4 sessions in one day";
+"focus.achievement.focus_master" = "Focus Master";
+"focus.achievement.focus_master_desc" = "Complete 100 total sessions";
+"focus.achievement.early_bird" = "Early Bird";
+"focus.achievement.early_bird_desc" = "Start a session before 8 AM";
+
+// MARK: - Focus Rooms
+"focus.room.study_together" = "Study Together";
+"focus.room.study_together_desc" = "Focused study session for students and professionals";
+"focus.room.morning_productivity" = "Morning Productivity";
+"focus.room.morning_productivity_desc" = "Start your day with a productive work session";
+"focus.room.deep_work_zone" = "Deep Work Zone";
+"focus.room.deep_work_zone_desc" = "For those who need intense focus and concentration";
+"focus.room.creative_flow" = "Creative Flow";
+"focus.room.creative_flow_desc" = "Perfect for creative work and brainstorming";
+
+// MARK: - Analytics
+"analytics.analytics" = "Analytics";
+"analytics.weekly_report" = "Weekly Report";
+"analytics.monthly_report" = "Monthly Report";
+"analytics.mood_trend" = "Mood Trend";
+"analytics.habit_progress" = "Habit Progress";
+"analytics.focus_time" = "Focus Time";
+"analytics.insights" = "Insights";
+"analytics.export_report" = "Export Report";
+"analytics.share_report" = "Share Report";
+"analytics.overview" = "Overview";
+"analytics.journal_entries" = "Journal Entries";
+"analytics.avg_mood" = "Avg Mood";
+"analytics.habits_completed" = "Habits Completed";
+"analytics.focus_minutes" = "Focus Minutes";
+"analytics.mood_trends" = "Mood Trends";
+"analytics.see_details" = "See Details";
+"analytics.habits_performance" = "Habits Performance";
+"analytics.journal_insights" = "Journal Insights";
+"analytics.top_keywords" = "Top Keywords";
+"analytics.emotional_insights" = "Emotional Insights";
+"analytics.week" = "Week";
+"analytics.month" = "Month";
+"analytics.quarter" = "Quarter";
+"analytics.achievements" = "Achievements";
+"analytics.percent_completed" = "%d%% completed";
+"analytics.percent_change" = "%d%% change";
+"analytics.completed_days" = "%d/%d days";
+
+// MARK: - Analytics Overview Subtitles
+"analytics.overview.journal_subtitle" = "+%d this week";
+"analytics.overview.mood_subtitle" = "%@ from last week";
+"analytics.overview.focus_subtitle" = "+%@ from yesterday";
+
+// MARK: - Analytics Mock Data
+"analytics.habit.morning_exercise" = "Morning Exercise";
+"analytics.habit.daily_reading" = "Daily Reading";
+"analytics.habit.meditation" = "Meditation";
+"analytics.habit.journal_writing" = "Journal Writing";
+"analytics.weekly_report_title" = "Week 42 Personal Growth Report";
+"analytics.weekly_report_date" = "Oct 16 - Oct 22, 2024";
+"analytics.weekly_report_summary" = "This week demonstrated strong commitment to personal growth with notable improvements in habit consistency and emotional well-being. Your journaling practice has been particularly insightful, revealing patterns of growth and self-awareness.";
+"analytics.highlight.journal_completion" = "100% journal completion";
+"analytics.highlight.habit_consistency" = "86% habit consistency";
+"analytics.highlight.mood_trend" = "Mood trend: Positive ↗️";
+"analytics.ai_insights_sample" = "Your consistent morning routine appears to be a key factor in maintaining positive mood levels. Consider exploring meditation techniques to handle midweek stress more effectively.";
+"analytics.emotional_insight_sample" = "This week showed a generally positive emotional trend with some midweek stress. Your mood improved significantly toward the weekend, likely due to consistent exercise and quality time with family.";
+
+// MARK: - Keywords
+"keyword.work" = "work";
+"keyword.exercise" = "exercise";
+"keyword.family" = "family";
+"keyword.reading" = "reading";
+"keyword.grateful" = "grateful";
+
+// MARK: - Profile
+"profile.profile" = "Profile";
+"profile.my_profile" = "My Profile";
+"profile.settings" = "Settings";
+"profile.about" = "About";
+"profile.journal_entries" = "Journal\nEntries";
+"profile.current_streak" = "Current Streak";
+"profile.completed_habits" = "Completed Habits";
+"profile.rate_app" = "Rate Joury";
+"profile.rate_app_subtitle" = "Support us with a review";
+"profile.feedback" = "Send Feedback";
+"profile.feedback_subtitle" = "Help us improve";
+"profile.privacy_policy" = "Privacy Policy";
+"profile.privacy_policy_subtitle" = "How we protect your data";
+"profile.statistics" = "Statistics";
+"profile.sign_out_confirmation" = "Are you sure you want to sign out?";
+
+// MARK: - Settings
+"settings.title" = "Settings";
+"settings.welcome" = "Settings";
+"settings.subtitle" = "Customize your experience";
+"settings.appearance" = "Appearance";
+"settings.theme" = "Theme";
+"settings.accent_color" = "Accent Color";
+"settings.language" = "Language";
+"settings.notifications" = "Notifications";
+"settings.enable_notifications" = "Enable Notifications";
+"settings.daily_reminders" = "Daily reminders and insights";
+"settings.morning_reminders" = "Morning Reminders";
+"settings.start_day_reflection" = "Start your day with a reflection";
+"settings.evening_reminders" = "Evening Reminders";
+"settings.end_day_reflection" = "End your day with gratitude";
+"settings.privacy_security" = "Privacy & Security";
+"settings.app_lock" = "App Lock";
+"settings.require_authentication" = "Require biometric authentication";
+"settings.privacy_policy" = "Privacy Policy";
+"settings.how_we_protect" = "How we protect your data";
+"settings.data_management" = "Data Management";
+"settings.export_data" = "Export Data";
+"settings.download_journal" = "Download your journal entries";
+"settings.clear_cache" = "Clear Cache";
+"settings.free_storage" = "Free up storage space";
+"settings.about" = "About";
+"settings.version" = "Version";
+"settings.feedback" = "Send Feedback";
+"settings.help_improve" = "Help us improve Joury";
+"settings.terms_of_service" = "Terms of Service";
+"settings.legal_information" = "Legal information";
+"settings.appearance_language_notifications" = "Appearance, language & notifications";
+
+// MARK: - Focus Phase
+"focus.workPhase" = "Work";
+"focus.shortBreak" = "Short Break";
+"focus.longBreak" = "Long Break";
+"focus.availableRooms" = "Available Rooms";
+"focus.noRooms" = "No Rooms";
+"focus.createFirstRoom" = "Create First Room";
+"focus.todayStats" = "Today's Stats";
+"focus.weeklyOverview" = "Weekly Overview";
+"focus.roomName" = "Room Name";
+"focus.roomDescription" = "Room Description";
+"focus.createRoom" = "Create Room";
+
+// MARK: - Mock Analytics Data
+"analytics.habit.morning_exercise" = "Morning Exercise";
+"analytics.habit.daily_reading" = "Daily Reading";
+"analytics.habit.meditation" = "Meditation";
+"analytics.habit.journal_writing" = "Journal Writing";
+"analytics.emotional_insight_sample" = "This week showed a generally positive emotional trend with some midweek stress. Your mood improved significantly toward the weekend, likely due to consistent exercise and quality time with family.";
+"analytics.weekly_report_title" = "Week 42 Personal Growth Report";
+"analytics.weekly_report_date" = "Oct 16 - Oct 22, 2024";
+"analytics.weekly_report_summary" = "This week demonstrated strong commitment to personal growth with notable improvements in habit consistency and emotional well-being. Your journaling practice has been particularly insightful, revealing patterns of growth and self-awareness.";
+"analytics.highlight.journal_completion" = "100% journal completion";
+"analytics.highlight.habit_consistency" = "86% habit consistency";
+"analytics.highlight.mood_trend" = "Mood trend: Positive ↗️";
+"analytics.ai_insights_sample" = "Your consistent morning routine appears to be a key factor in maintaining positive mood levels. Consider exploring meditation techniques to handle midweek stress more effectively.";
+
+// MARK: - Mock Focus Rooms
+"focus.room.study_together" = "Study Together";
+"focus.room.study_together_desc" = "Focused study session for students and professionals";
+"focus.room.morning_productivity" = "Morning Productivity";
+"focus.room.morning_productivity_desc" = "Start your day with a productive work session";
+"focus.room.deep_work_zone" = "Deep Work Zone";
+"focus.room.deep_work_zone_desc" = "For those who need intense focus and concentration";
+"focus.room.creative_flow" = "Creative Flow";
+"focus.room.creative_flow_desc" = "Perfect for creative work and brainstorming";
+
+// MARK: - Focus Achievements
+"focus.achievement.first_focus" = "First Focus";
+"focus.achievement.first_focus_desc" = "Complete your first focus session";
+"focus.achievement.daily_hero" = "Daily Hero";
+"focus.achievement.daily_hero_desc" = "Complete 4 sessions in one day";
+"focus.achievement.focus_master" = "Focus Master";
+"focus.achievement.focus_master_desc" = "Complete 100 total sessions";
+"focus.achievement.early_bird" = "Early Bird";
+"focus.achievement.early_bird_desc" = "Start a session before 8 AM";
+
+// MARK: - Journal Reflection Questions
+"journal.reflection.feeling_now" = "How are you feeling right now?";
+"journal.reflection.mind_today" = "What's been on your mind today?";
+"journal.reflection.grateful_for" = "What are you grateful for?";
+"journal.reflection.focus_on" = "What would you like to focus on?";
+"journal.fallback_response" = "I'm sorry, I'm having trouble responding right now. Please try again.";
+
+// MARK: - Weekday Labels
+"weekday.monday" = "Mon";
+"weekday.tuesday" = "Tue";
+"weekday.wednesday" = "Wed";
+"weekday.thursday" = "Thu";
+"weekday.friday" = "Fri";
+"weekday.saturday" = "Sat";
+"weekday.sunday" = "Sun";
+
+// MARK: - Keywords for Analytics
+"keyword.work" = "work";
+"keyword.exercise" = "exercise";
+"keyword.family" = "family";
+"keyword.reading" = "reading";
+"keyword.grateful" = "grateful";
+"profile.rate_app_subtitle" = "Help others discover Joury";
+"profile.feedback" = "Send Feedback";
+"profile.feedback_subtitle" = "Help us improve";
+"profile.privacy_policy" = "Privacy Policy";
+"profile.terms_of_service" = "Terms of Service";
+"profile.terms_of_service_subtitle" = "Legal information and terms";
+"profile.sign_out_subtitle" = "You will need to sign in again";
+"profile.sign_in_subtitle" = "Access all features";
+"profile.edit_profile" = "Edit Profile";
+"profile.name" = "Name";
+"profile.email" = "Email";
+"profile.avatar" = "Avatar";
+"profile.preferences" = "Preferences";
+"profile.notifications" = "Notifications";
+"profile.privacy" = "Privacy";
+"profile.version" = "Version";
+"profile.support" = "Support";
+"profile.statistics" = "Statistics";
+"profile.sign_out_confirmation" = "Are you sure you want to sign out?";
+
+// MARK: - Settings
+"settings.settings" = "Settings";
+"settings.title" = "Settings";
+"settings.welcome" = "Personalize Your Experience";
+"settings.subtitle" = "Adjust Joury to match your preferences";
+"settings.appearance" = "Appearance";
+"settings.theme" = "Theme";
+"settings.accent_color" = "Accent Color";
+"settings.accent_colors" = "Accent Colors";
+"settings.color_preview" = "Current color palette";
+"settings.language" = "Language";
+"settings.notifications" = "Notifications";
+"settings.enable_notifications" = "Enable Notifications";
+"settings.daily_reminders" = "Get gentle daily reminders";
+"settings.morning_reminders" = "Morning Reminders";
+"settings.start_day_reflection" = "Start your day with reflection";
+"settings.evening_reminders" = "Evening Reminders";
+"settings.end_day_reflection" = "End your day with gratitude";
+"settings.habit_reminders" = "Habit Reminders";
+"settings.habit_reminders_subtitle" = "Reminders for your habit tracking goals";
+"settings.reflect_day" = "Reflect on your day";
+"settings.privacy_security" = "Privacy & Security";
+"settings.app_lock" = "App Lock";
+"settings.require_authentication" = "Require Face ID or Touch ID";
+"settings.biometric_auth_reason" = "Authenticate to access Joury";
+"settings.privacy_policy" = "Privacy Policy";
+"settings.how_we_protect" = "How we protect your data";
+"settings.ai_analysis" = "AI Analysis";
+"settings.ai_analysis_subtitle" = "Allow AI to analyze your entries for insights";
+"settings.icloud_sync" = "iCloud Sync";
+"settings.icloud_sync_subtitle" = "Sync your data across devices";
+"settings.data_management" = "Data Management";
+"settings.export_data" = "Export Data";
+"settings.download_journal" = "Download your journal entries";
+"settings.clear_cache" = "Clear Cache";
+"settings.free_storage" = "Free up storage space";
+"settings.delete_all_data" = "Delete All Data";
+"settings.delete_data_warning" = "This will permanently delete all your data";
+"settings.about" = "About";
+"settings.version" = "Version";
+"settings.feedback" = "Send Feedback";
+"settings.help_improve" = "Help us improve Joury";
+"settings.terms_of_service" = "Terms of Service";
+"settings.legal_information" = "Legal information";
+"settings.privacy" = "Privacy";
+"settings.security" = "Security";
+"settings.data_export" = "Data Export";
+"settings.delete_account" = "Delete Account";
+"settings.restart_required" = "Restart Required";
+"settings.restart_message" = "Please restart the app for language changes to take effect.";
+"settings.language_changed" = "Language Changed";
+"settings.language_change_message" = "The app will reload to apply the language change.";
+"settings.appearance_language_notifications" = "Appearance, Language & Notifications";
+
+// MARK: - Days of Week
+"weekday.monday" = "Mon";
+"weekday.tuesday" = "Tue";
+"weekday.wednesday" = "Wed";
+"weekday.thursday" = "Thu";
+"weekday.friday" = "Fri";
+"weekday.saturday" = "Sat";
+"weekday.sunday" = "Sun";
+
+// MARK: - Errors
+"errors.network_error" = "Network error occurred";
+"errors.server_error" = "Server error occurred";
+"errors.validation_error" = "Validation error";
+"errors.unknown_error" = "Unknown error occurred";
+"errors.permission_denied" = "Permission denied";
+"errors.file_not_found" = "File not found";
+"errors.authentication_failed" = "Authentication failed";
+"errors.google_auth_failed" = "Google authentication failed";
+
+// MARK: - Notifications
+"notifications.daily_reflection" = "Daily reflection reminder";
+"notifications.habit_reminder" = "Habit reminder";
+"notifications.focus_session" = "Focus session reminder";
+"notifications.weekly_report" = "Your weekly report is ready";
+"notifications.permission" = "Notification Permission";
+"notifications.settings" = "Notification Settings";
+
+// MARK: - Privacy Notice (hardcoded string found)
+"privacy_notice" = "By continuing, you agree to our Privacy Policy and Terms of Service. Your data is secure and private.";
+
+// MARK: - Analytics missing keys
+"analytics.journal_entries" = "Journal Entries";
+"analytics.avg_mood" = "Avg Mood";
+"analytics.habits_completed" = "Habits Completed";
+"analytics.focus_minutes" = "Focus Minutes";
+"analytics.mood_trends" = "Mood Trends";
+"analytics.see_details" = "See Details";
+"analytics.habits_performance" = "Habits Performance";
+"analytics.journal_insights" = "Journal Insights";
+"analytics.top_keywords" = "Top Keywords";
+"analytics.emotional_insights" = "Emotional Insights";
+
+// MARK: - Journal Mode Selection
+"journal.mode.traditional" = "Traditional";
+"journal.mode.interactive" = "Interactive";
+"journal.mode.traditional.description" = "Write freely with AI assistance";
+"journal.mode.interactive.description" = "Conversation-style journaling";
+
+// MARK: - Traditional Journal
+"journal.traditional.title" = "Today's Journal";
+"journal.traditional.placeholder" = "Share your thoughts, feelings, and experiences from today. What made you smile? What challenged you? Write freely...";
+"journal.ai.assistant" = "AI Assistant";
+"journal.ai.analyzing" = "Generating suggestions...";
+"journal.ai.suggestion.1" = "How did today's events make you feel?";
+"journal.ai.suggestion.2" = "What was the highlight of your day?";
+"journal.ai.suggestion.3" = "Is there anything you'd like to improve tomorrow?";
+"journal.characters" = "characters";
+
+// MARK: - Interactive Journal  
+"journal.interactive.title" = "Interactive Journal";
+"journal.interactive.welcome" = "Let's reflect together";
+"journal.interactive.subtitle" = "I'm here to guide you through your thoughts and help you discover insights about your day.";
+"journal.interactive.placeholder" = "Share what's on your mind...";
+
+// MARK: - Journal Common
+"journal.mood" = "Mood";
+"journal.past_journals" = "Past Journals";
+"journal.no_active_session" = "No active journal session";
+"common.loading" = "Loading...";
+"common.save" = "Save"; 

@@ -55,11 +55,11 @@ struct HabitsView: View {
             // Today's Progress
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("habits.todayProgress".localized)
+                    Text("habits.today_progress".localized)
                         .font(.headline)
                         .foregroundColor(themeManager.colors.textPrimary)
                     
-                    Text("\(viewModel.completedTodayCount)/\(viewModel.totalHabitsCount) completed")
+                    Text(String(format: NSLocalizedString("habits.daily_progress", comment: ""), viewModel.completedTodayCount, viewModel.totalHabitsCount))
                         .font(.subheadline)
                         .foregroundColor(themeManager.colors.textSecondary)
                 }
@@ -109,12 +109,12 @@ struct HabitsView: View {
                 .foregroundColor(themeManager.colors.textSecondary)
             
             VStack(spacing: 8) {
-                Text("habits.emptyTitle".localized)
+                Text("habits.empty_title".localized)
                     .font(.title2)
                     .fontWeight(.semibold)
                     .foregroundColor(themeManager.colors.textPrimary)
                 
-                Text("habits.emptyMessage".localized)
+                Text("habits.empty_message".localized)
                     .font(.body)
                     .foregroundColor(themeManager.colors.textSecondary)
                     .multilineTextAlignment(.center)
@@ -124,7 +124,7 @@ struct HabitsView: View {
             Button(action: { showingAddHabit = true }) {
                 HStack {
                     Image(systemName: "plus.circle.fill")
-                    Text("habits.createFirst".localized)
+                    Text("habits.create_first".localized)
                 }
                 .font(.headline)
                 .foregroundColor(.white)
@@ -188,7 +188,7 @@ struct HabitCardView: View {
                 
                 Spacer()
                 
-                Text("\(Int(habit.weeklyProgress * 100))% this week")
+                Text(String(format: NSLocalizedString("habits.weekly_percent", comment: ""), Int(habit.weeklyProgress * 100)))
                     .font(.caption)
                     .foregroundColor(themeManager.colors.textSecondary)
                 
@@ -224,7 +224,7 @@ struct CircularProgressView: View {
                 .rotationEffect(.degrees(-90))
                 .animation(.easeInOut(duration: 0.5), value: progress)
             
-            Text("\(Int(progress * 100))%")
+            Text(String(format: NSLocalizedString("common.percent", comment: ""), Int(progress * 100)))
                 .font(.caption)
                 .fontWeight(.semibold)
                 .foregroundColor(color)
@@ -239,7 +239,7 @@ struct WeeklySummaryView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("habits.weeklyProgress".localized)
+            Text("habits.weekly_progress".localized)
                 .font(.subheadline)
                 .fontWeight(.medium)
                 .foregroundColor(themeManager.colors.textPrimary)
@@ -282,7 +282,7 @@ struct AddHabitView: View {
                             .font(.headline)
                             .foregroundColor(themeManager.colors.textPrimary)
                         
-                        TextField("habits.namePlaceholder".localized, text: $habitName)
+                        TextField("habits.name_placeholder".localized, text: $habitName)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                     }
                     
@@ -291,7 +291,7 @@ struct AddHabitView: View {
                             .font(.headline)
                             .foregroundColor(themeManager.colors.textPrimary)
                         
-                        TextField("habits.descriptionPlaceholder".localized, text: $habitDescription, axis: .vertical)
+                        TextField("habits.description_placeholder".localized, text: $habitDescription, axis: .vertical)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .lineLimit(3)
                     }
@@ -301,7 +301,7 @@ struct AddHabitView: View {
                             .font(.headline)
                             .foregroundColor(themeManager.colors.textPrimary)
                         
-                        Picker("Frequency", selection: $habitType) {
+                        Picker("habits.frequency".localized, selection: $habitType) {
                             Text("habits.daily".localized).tag(HabitType.daily)
                             Text("habits.weekly".localized).tag(HabitType.weekly)
                         }
@@ -336,7 +336,7 @@ struct AddHabitView: View {
                 .padding(.bottom, 20)
             }
             .background(themeManager.colors.background)
-            .navigationTitle("habits.addHabit".localized)
+            .navigationTitle("habits.add_habit".localized)
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
         }
@@ -344,15 +344,10 @@ struct AddHabitView: View {
     
     private func createHabit() {
         let newHabit = Habit(
-            id: UUID().uuidString,
             name: habitName,
             description: habitDescription,
             type: habitType,
-            targetValue: targetValue,
-            currentStreak: 0,
-            isCompletedToday: false,
-            weeklyProgress: 0.0,
-            createdAt: Date()
+            targetValue: targetValue
         )
         
         viewModel.addHabit(newHabit)
@@ -360,31 +355,7 @@ struct AddHabitView: View {
     }
 }
 
-// MARK: - Models
-struct Habit: Identifiable, Codable {
-    let id: String
-    let name: String
-    let description: String
-    let type: HabitType
-    let targetValue: Int
-    let currentStreak: Int
-    let isCompletedToday: Bool
-    let weeklyProgress: Double
-    let createdAt: Date
-    
-    var streakCount: Int { currentStreak }
-}
-
-enum HabitType: String, CaseIterable, Codable {
-    case daily = "daily"
-    case weekly = "weekly"
-}
-
-struct DayData: Identifiable {
-    let id = UUID()
-    let dayName: String
-    let isCompleted: Bool
-}
+// MARK: - Models are now in SharedModels.swift
 
 // MARK: - Preview
 #Preview {

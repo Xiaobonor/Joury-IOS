@@ -2,29 +2,29 @@
 //  HabitsViewModel.swift
 //  Joury
 //
-//  View model for habits tracking functionality.
+//  Habits view model for managing habit tracking
 //
 
-import Foundation
+import SwiftUI
 import Combine
 
 @MainActor
 class HabitsViewModel: ObservableObject {
+    // MARK: - Published Properties
     @Published var habits: [Habit] = []
-    @Published var isLoading = false
+    @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     
-    private let networkManager = NetworkManager.shared
-    private let cacheManager = CacheManager.shared
+    // MARK: - Private Properties
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Computed Properties
-    var totalHabitsCount: Int {
-        habits.count
-    }
-    
     var completedTodayCount: Int {
         habits.filter { $0.isCompletedToday }.count
+    }
+    
+    var totalHabitsCount: Int {
+        habits.count
     }
     
     var todayProgress: Double {
@@ -33,48 +33,86 @@ class HabitsViewModel: ObservableObject {
     }
     
     var weeklyData: [DayData] {
-        // Generate mock weekly data for now
-        let weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-        return weekdays.enumerated().map { index, day in
-            DayData(dayName: day, isCompleted: index < 4) // Mock completion for first 4 days
+        let calendar = Calendar.current
+        let today = Date()
+        var weekData: [DayData] = []
+        
+        for i in 0..<7 {
+            let date = calendar.date(byAdding: .day, value: i - 6, to: today) ?? today
+            let dayName = calendar.shortWeekdaySymbols[calendar.component(.weekday, from: date) - 1]
+            let isCompleted = habits.allSatisfy { habit in
+                if let lastCompleted = habit.lastCompleted {
+                    return calendar.isDate(lastCompleted, inSameDayAs: date)
+                }
+                return false
+            }
+            weekData.append(DayData(dayName: dayName, isCompleted: isCompleted))
         }
+        return weekData
     }
     
-    // MARK: - API Methods
+    // MARK: - Initialization
+    init() {
+        loadMockData()
+    }
+    
+    // MARK: - Public Methods
     func loadHabits() {
         isLoading = true
         errorMessage = nil
         
-        // Try to load from cache first
-        if let cachedHabits: [Habit] = cacheManager.getObject([Habit].self, forKey: "user_habits") {
-            habits = cachedHabits
-            isLoading = false
-        }
-        
-        // Then fetch from API
         Task {
             do {
-                let fetchedHabits: [Habit] = try await networkManager.request(
+                let networkManager = NetworkManager.shared
+                let response: [Habit] = try await networkManager.request(
                     endpoint: "/habits",
                     method: .GET,
                     responseType: [Habit].self
                 ).asyncValue()
                 
                 await MainActor.run {
-                    habits = fetchedHabits
-                    isLoading = false
-                    
-                    // Cache the results
-                    cacheManager.setObject(fetchedHabits, forKey: "user_habits", expiration: .minutes(5))
+                    self.habits = response
+                    self.isLoading = false
                 }
             } catch {
                 await MainActor.run {
-                    isLoading = false
-                    errorMessage = error.localizedDescription
-                    
-                    // If API fails and we have no cached data, use mock data
-                    if habits.isEmpty {
-                        loadMockHabits()
+                    self.errorMessage = "Failed to load habits: \(error.localizedDescription)"
+                    self.isLoading = false
+                    // Fallback to mock data for now
+                    self.loadMockData()
+                }
+            }
+        }
+    }
+    
+    func toggleHabit(_ habit: Habit) {
+        Task {
+            do {
+                let networkManager = NetworkManager.shared
+                let response: Habit = try await networkManager.request(
+                    endpoint: "/habits/\(habit.id)/toggle",
+                    method: .POST,
+                    responseType: Habit.self
+                ).asyncValue()
+                
+                await MainActor.run {
+                    if let index = self.habits.firstIndex(where: { $0.id == habit.id }) {
+                        self.habits[index] = response
+                    }
+                }
+            } catch {
+                await MainActor.run {
+                    self.errorMessage = "Failed to toggle habit: \(error.localizedDescription)"
+                    // Fallback to local toggle for better UX
+                    if let index = self.habits.firstIndex(where: { $0.id == habit.id }) {
+                        self.habits[index].isCompletedToday.toggle()
+                        if self.habits[index].isCompletedToday {
+                            self.habits[index].lastCompleted = Date()
+                            self.habits[index].currentStreak += 1
+                        } else {
+                            self.habits[index].currentStreak = max(0, self.habits[index].currentStreak - 1)
+                        }
+                        self.updateWeeklyProgress(for: &self.habits[index])
                     }
                 }
             }
@@ -84,136 +122,94 @@ class HabitsViewModel: ObservableObject {
     func addHabit(_ habit: Habit) {
         Task {
             do {
-                let createdHabit: Habit = try await networkManager.request(
+                let networkManager = NetworkManager.shared
+                
+                // Create habit data for API
+                let habitData = CreateHabitRequest(
+                    name: habit.name,
+                    description: habit.description,
+                    type: habit.type.rawValue,
+                    targetValue: habit.targetValue
+                )
+                
+                let response: Habit = try await networkManager.request(
                     endpoint: "/habits",
                     method: .POST,
-                    body: habit,
+                    body: habitData,
                     responseType: Habit.self
                 ).asyncValue()
                 
                 await MainActor.run {
-                    habits.append(createdHabit)
-                    updateCache()
+                    self.habits.append(response)
                 }
             } catch {
                 await MainActor.run {
-                    errorMessage = error.localizedDescription
-                    // For now, add locally even if API fails
-                    habits.append(habit)
-                    updateCache()
-                }
-            }
-        }
-    }
-    
-    func toggleHabit(_ habit: Habit) {
-        guard let index = habits.firstIndex(where: { $0.id == habit.id }) else { return }
-        
-        // Update local state immediately
-        let updatedHabit = Habit(
-            id: habit.id,
-            name: habit.name,
-            description: habit.description,
-            type: habit.type,
-            targetValue: habit.targetValue,
-            currentStreak: habit.isCompletedToday ? habit.currentStreak - 1 : habit.currentStreak + 1,
-            isCompletedToday: !habit.isCompletedToday,
-            weeklyProgress: habit.weeklyProgress, // This would be recalculated by backend
-            createdAt: habit.createdAt
-        )
-        
-        habits[index] = updatedHabit
-        updateCache()
-        
-        // Sync with backend
-        Task {
-            do {
-                let _ = try await networkManager.request(
-                    endpoint: "/habits/\(habit.id)/toggle",
-                    method: .POST,
-                    responseType: Habit.self
-                ).asyncValue()
-            } catch {
-                // Revert if API call fails
-                await MainActor.run {
-                    habits[index] = habit
-                    errorMessage = error.localizedDescription
-                    updateCache()
+                    self.errorMessage = "Failed to create habit: \(error.localizedDescription)"
+                    // Fallback to local add for better UX
+                    self.habits.append(habit)
                 }
             }
         }
     }
     
     func editHabit(_ habit: Habit) {
-        // TODO: Implement habit editing
-        print("Edit habit: \(habit.name)")
+        // TODO: Implement edit habit functionality
+        print("Editing habit: \(habit.name)")
     }
     
     func deleteHabit(_ habit: Habit) {
-        Task {
-            do {
-                try await networkManager.request(
-                    endpoint: "/habits/\(habit.id)",
-                    method: .DELETE,
-                    responseType: EmptyResponse.self
-                ).asyncValue()
-                
-                await MainActor.run {
-                    habits.removeAll { $0.id == habit.id }
-                    updateCache()
-                }
-            } catch {
-                await MainActor.run {
-                    errorMessage = error.localizedDescription
-                }
-            }
-        }
+        habits.removeAll { $0.id == habit.id }
     }
     
     // MARK: - Private Methods
-    private func updateCache() {
-        cacheManager.setObject(habits, forKey: "user_habits", expiration: .minutes(5))
-    }
-    
-    private func loadMockHabits() {
+    private func loadMockData() {
         habits = [
             Habit(
-                id: "1",
-                name: "Morning Exercise",
-                description: "30 minutes of morning workout",
+                name: NSLocalizedString("habits.morning_meditation", comment: ""),
+                description: NSLocalizedString("habits.meditation_desc", comment: ""),
+                type: .daily,
+                targetValue: 1,
+                currentStreak: 7,
+                isCompletedToday: true,
+                weeklyProgress: 0.86,
+                lastCompleted: Date()
+            ),
+            Habit(
+                name: NSLocalizedString("habits.daily_journal", comment: ""),
+                description: NSLocalizedString("habits.journal_desc", comment: ""),
                 type: .daily,
                 targetValue: 1,
                 currentStreak: 5,
-                isCompletedToday: true,
-                weeklyProgress: 0.8,
-                createdAt: Date()
-            ),
-            Habit(
-                id: "2",
-                name: "Read Books",
-                description: "Read at least 20 pages daily",
-                type: .daily,
-                targetValue: 20,
-                currentStreak: 3,
                 isCompletedToday: false,
-                weeklyProgress: 0.6,
-                createdAt: Date()
+                weeklyProgress: 0.71,
+                lastCompleted: Calendar.current.date(byAdding: .day, value: -1, to: Date())
             ),
             Habit(
-                id: "3",
-                name: "Meditation",
-                description: "10 minutes mindfulness meditation",
+                name: NSLocalizedString("habits.gratitude_practice", comment: ""),
+                description: NSLocalizedString("habits.gratitude_desc", comment: ""),
                 type: .daily,
-                targetValue: 10,
+                targetValue: 1,
                 currentStreak: 12,
                 isCompletedToday: true,
-                weeklyProgress: 0.9,
-                createdAt: Date()
+                weeklyProgress: 1.0,
+                lastCompleted: Date()
             )
         ]
-        updateCache()
     }
-}
-
-// MARK: - Supporting Types
-// EmptyResponse is now defined in SharedModels.swift 
+    
+    private func updateWeeklyProgress(for habit: inout Habit) {
+        let calendar = Calendar.current
+        let today = Date()
+        var completedDays = 0
+        
+        for i in 0..<7 {
+            if let date = calendar.date(byAdding: .day, value: i - 6, to: today),
+               let lastCompleted = habit.lastCompleted,
+               calendar.isDate(lastCompleted, inSameDayAs: date) {
+                completedDays += 1
+            }
+        }
+        
+        habit.weeklyProgress = Double(completedDays) / 7.0
+    }
+} 

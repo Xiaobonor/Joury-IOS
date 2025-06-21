@@ -230,29 +230,29 @@ class FocusViewModel: ObservableObject {
         achievements = [
             Achievement(
                 id: "first_session",
-                title: "First Focus",
-                description: "Complete your first focus session",
+                title: NSLocalizedString("focus.achievement.first_focus", comment: ""),
+                description: NSLocalizedString("focus.achievement.first_focus_desc", comment: ""),
                 icon: "star.fill",
                 isUnlocked: todayStats.sessions > 0
             ),
             Achievement(
                 id: "daily_goal",
-                title: "Daily Hero",
-                description: "Complete 4 sessions in one day",
+                title: NSLocalizedString("focus.achievement.daily_hero", comment: ""),
+                description: NSLocalizedString("focus.achievement.daily_hero_desc", comment: ""),
                 icon: "flame.fill",
                 isUnlocked: todayStats.sessions >= 4
             ),
             Achievement(
                 id: "focus_master",
-                title: "Focus Master",
-                description: "Complete 100 total sessions",
+                title: NSLocalizedString("focus.achievement.focus_master", comment: ""),
+                description: NSLocalizedString("focus.achievement.focus_master_desc", comment: ""),
                 icon: "crown.fill",
                 isUnlocked: false // Would check total sessions from backend
             ),
             Achievement(
                 id: "early_bird",
-                title: "Early Bird",
-                description: "Start a session before 8 AM",
+                title: NSLocalizedString("focus.achievement.early_bird", comment: ""),
+                description: NSLocalizedString("focus.achievement.early_bird_desc", comment: ""),
                 icon: "sunrise.fill",
                 isUnlocked: false
             )
@@ -291,32 +291,32 @@ class FocusViewModel: ObservableObject {
         focusRooms = [
             FocusRoom(
                 id: "1",
-                name: "Study Together",
-                description: "Focused study session for students and professionals",
+                name: NSLocalizedString("focus.room.study_together", comment: ""),
+                description: NSLocalizedString("focus.room.study_together_desc", comment: ""),
                 participantCount: 12,
                 isActive: true,
                 createdAt: Date()
             ),
             FocusRoom(
                 id: "2",
-                name: "Morning Productivity",
-                description: "Start your day with a productive work session",
+                name: NSLocalizedString("focus.room.morning_productivity", comment: ""),
+                description: NSLocalizedString("focus.room.morning_productivity_desc", comment: ""),
                 participantCount: 8,
                 isActive: true,
                 createdAt: Date()
             ),
             FocusRoom(
                 id: "3",
-                name: "Deep Work Zone",
-                description: "For those who need intense focus and concentration",
+                name: NSLocalizedString("focus.room.deep_work_zone", comment: ""),
+                description: NSLocalizedString("focus.room.deep_work_zone_desc", comment: ""),
                 participantCount: 5,
                 isActive: true,
                 createdAt: Date()
             ),
             FocusRoom(
                 id: "4",
-                name: "Creative Flow",
-                description: "Perfect for creative work and brainstorming",
+                name: NSLocalizedString("focus.room.creative_flow", comment: ""),
+                description: NSLocalizedString("focus.room.creative_flow_desc", comment: ""),
                 participantCount: 15,
                 isActive: true,
                 createdAt: Date()

@@ -28,7 +28,7 @@ enum NetworkError: Error, LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidURL:
-            return LocalizationKeys.Errors.validationError.localized
+            return NSLocalizedString(LocalizationKeys.Errors.validationError, comment: "")
         case .noData:
             return "No data received"
         case .decodingError(let error):
@@ -38,17 +38,17 @@ enum NetworkError: Error, LocalizedError {
         case .httpError(let code, let message):
             return "HTTP \(code): \(message ?? "Unknown error")"
         case .networkUnavailable:
-            return LocalizationKeys.Errors.networkError.localized
+            return NSLocalizedString(LocalizationKeys.Errors.networkError, comment: "")
         case .timeout:
             return "Request timeout"
         case .unauthorized:
-            return LocalizationKeys.Errors.authenticationFailed.localized
+            return NSLocalizedString(LocalizationKeys.Errors.authenticationFailed, comment: "")
         case .forbidden:
-            return LocalizationKeys.Errors.permissionDenied.localized
+            return NSLocalizedString(LocalizationKeys.Errors.permissionDenied, comment: "")
         case .notFound:
-            return LocalizationKeys.Errors.fileNotFound.localized
+            return NSLocalizedString(LocalizationKeys.Errors.fileNotFound, comment: "")
         case .serverError:
-            return LocalizationKeys.Errors.serverError.localized
+            return NSLocalizedString(LocalizationKeys.Errors.serverError, comment: "")
         case .unknown(let error):
             return error.localizedDescription
         }
@@ -365,3 +365,4 @@ class NetworkManager: ObservableObject {
 }
 
 // Remove Auth Manager placeholder since we're using AuthenticationManager 
+

@@ -13,7 +13,8 @@ struct JouryApp: App {
     @StateObject private var themeManager = ThemeManager()
     @StateObject private var localizationManager = LocalizationManager()
     @StateObject private var networkManager = NetworkManager.shared
-    @StateObject private var authManager = AuthenticationManager.shared
+    @StateObject private var authenticationManager = AuthenticationManager.shared
+    @StateObject private var appReloader = AppReloader.shared
     
     var body: some Scene {
         WindowGroup {
@@ -21,10 +22,11 @@ struct JouryApp: App {
                 .environmentObject(themeManager)
                 .environmentObject(localizationManager)
                 .environmentObject(networkManager)
-                .environmentObject(authManager)
+                .environmentObject(authenticationManager)
                 .environment(\.theme, themeManager)
                 .environment(\.localization, localizationManager)
                 .preferredColorScheme(themeManager.isDarkMode ? .dark : .light)
+                .id(appReloader.reloadTrigger) // This will force a complete reload when the trigger changes
         }
     }
 }

@@ -1,0 +1,524 @@
+/* 
+   Localizable.strings (Traditional Chinese)
+   Joury
+   
+   Traditional Chinese localization for Joury iOS app
+*/
+
+// MARK: - General
+"general.app_name" = "Joury";
+"general.ok" = "確定";
+"general.cancel" = "取消";
+"general.save" = "儲存";
+"general.delete" = "刪除";
+"general.edit" = "編輯";
+"general.done" = "完成";
+"general.back" = "返回";
+"general.next" = "下一步";
+"general.skip" = "跳過";
+"general.retry" = "重試";
+"general.loading" = "載入中...";
+"general.error" = "錯誤";
+"general.success" = "成功";
+"general.warning" = "警告";
+"general.info" = "資訊";
+
+// MARK: - Common
+"common.back" = "返回";
+"common.ok" = "確定";
+"common.cancel" = "取消";
+"common.save" = "儲存";
+"common.delete" = "刪除";
+"common.edit" = "編輯";
+"common.done" = "完成";
+"common.next" = "下一步";
+"common.skip" = "跳過";
+"common.retry" = "重試";
+"common.loading" = "載入中...";
+"common.error" = "錯誤";
+"common.success" = "成功";
+"common.warning" = "警告";
+"common.info" = "資訊";
+"common.sign_in" = "登入";
+"common.sign_out" = "登出";
+"common.guest" = "訪客";
+"common.guest_email" = "guest@joury.app";
+"common.percent" = "%d%%";
+
+// MARK: - Authentication
+"auth.sign_in" = "登入";
+"auth.sign_out" = "登出";
+"auth.sign_in_with_google" = "使用 Google 繼續";
+"auth.continue_as_guest" = "以訪客身份繼續";
+"auth.welcome" = "歡迎使用 Joury";
+"auth.welcome_message" = "您的個人成長夥伴";
+"auth.welcome_subtitle" = "您的AI個人成長與反思伙伴";
+"auth.privacy_notice" = "繼續使用即表示您同意我們的隱私政策和服務條款。您的資料安全且私密。";
+"auth.sign_in_required" = "需要登入";
+"auth.sign_in_required_message" = "請登入以使用此功能";
+"auth.guest" = "訪客";
+"auth.guest_email" = "guest@joury.app";
+
+// MARK: - Language
+"language.en" = "英文";
+"language.zh_tw" = "繁體中文";
+
+// MARK: - Theme
+"theme.light" = "淺色";
+"theme.dark" = "深色";
+"theme.auto" = "自動";
+
+// MARK: - Journal
+"journal.journal" = "日記";
+"journal.today" = "今日日記";
+"journal.write" = "寫日記";
+"journal.ai_greeting" = "嗨！今天過得如何呢？";
+"journal.ai_question" = "你想要反思什麼呢？";
+"journal.your_thoughts" = "分享你的想法...";
+"journal.add_photo" = "新增照片";
+"journal.add_voice" = "新增語音";
+"journal.mood_today" = "今天的心情如何？";
+"journal.reflection_prompt" = "你在想什麼？";
+"journal.entry_created" = "日記條目已建立";
+"journal.entry_updated" = "日記條目已更新";
+"journal.entry_deleted" = "日記條目已刪除";
+"journal.quick_action_day_question" = "今天過得如何？";
+"journal.quick_action_gratitude" = "我感謝什麼？";
+"journal.quick_action_mind" = "我在想什麼？";
+"journal.quick_action_goals" = "明天的目標";
+"journal.quick_action_day_response" = "今天過得如何？";
+"journal.quick_action_gratitude_response" = "今天我感謝什麼？";
+"journal.quick_action_mind_response" = "現在我在想什麼？";
+"journal.quick_action_goals_response" = "我明天的目標是什麼？";
+"journal.fallback_response" = "抱歉，我現在無法回應。請稍後再試。";
+"journal.reflection.feeling_now" = "您現在感覺如何？";
+"journal.reflection.mind_today" = "今天您心裡在想什麼？";
+"journal.reflection.grateful_for" = "您感謝什麼？";
+"journal.reflection.focus_on" = "您想專注於什麼？";
+
+// MARK: - New Journal Interface
+"journal.greeting.morning" = "早安";
+"journal.greeting.afternoon" = "午安";
+"journal.greeting.evening" = "晚安";
+"journal.greeting.night" = "夜安";
+
+"journal.today.status" = "今日日記";
+"journal.today.written" = "您今天已經寫過了";
+"journal.today.not_written" = "尚未撰寫";
+"journal.continue" = "繼續";
+"journal.mood.today" = "今日心情";
+
+"journal.quick.traditional" = "自由書寫";
+"journal.quick.traditional.subtitle" = "自由表達您的想法";
+"journal.quick.interactive" = "引導對話";
+"journal.quick.interactive.subtitle" = "AI 引導式反思";
+
+"journal.recent.entries" = "最近的記錄";
+"journal.view.all" = "查看全部";
+"journal.history" = "歷史記錄";
+"journal.new.entry" = "新增記錄";
+
+"journal.mode.selection" = "選擇書寫模式";
+"journal.mode.selection.subtitle" = "您今天想如何寫日記？";
+
+"journal.empty.title" = "您的旅程開始了";
+"journal.empty.subtitle" = "開始寫作來記錄您的想法和感受";
+
+// MARK: - Habits
+"habits.habits" = "習慣";
+"habits.my_habits" = "我的習慣";
+"habits.add_habit" = "新增習慣";
+"habits.edit_habit" = "編輯習慣";
+"habits.habit_name" = "習慣名稱";
+"habits.habit_description" = "描述";
+"habits.habit_frequency" = "頻率";
+"habits.habit_target" = "目標";
+"habits.daily" = "每日";
+"habits.weekly" = "每週";
+"habits.monthly" = "每月";
+"habits.completed" = "已完成";
+"habits.incomplete" = "未完成";
+"habits.streak" = "連續天數";
+"habits.habit_completed" = "習慣已完成！";
+"habits.ai_suggestion" = "AI 建議";
+"habits.daily_journal" = "日記習慣";
+"habits.morning_meditation" = "晨間冥想";
+"habits.gratitude_practice" = "感恩練習";
+"habits.journal_desc" = "反思您的一天和想法";
+"habits.meditation_desc" = "以正念開始您的一天";
+"habits.gratitude_desc" = "細數您的祝福並感激生活";
+"habits.today_progress" = "今日進度";
+"habits.daily_progress" = "已完成 %d 個，共 %d 個";
+"habits.weekly_percent" = "本週 %d%%";
+"habits.empty_title" = "尚未建立習慣";
+"habits.empty_message" = "開始培養正面習慣，改善您的日常生活和個人成長。";
+"habits.create_first" = "建立您的第一個習慣";
+"habits.weekly_progress" = "每週進度";
+"habits.name" = "名稱";
+"habits.description" = "描述";
+"habits.frequency" = "頻率";
+"habits.name_placeholder" = "輸入習慣名稱";
+"habits.description_placeholder" = "輸入習慣描述";
+"habits.create" = "建立習慣";
+
+// MARK: - Focus
+"focus.focus" = "專注";
+"focus.focus_mode" = "專注模式";
+"focus.pomodoro_timer" = "番茄鐘";
+"focus.start_focus" = "開始專注";
+"focus.stop_focus" = "停止專注";
+"focus.pause_focus" = "暫停專注";
+"focus.resume_focus" = "繼續專注";
+"focus.focus_complete" = "專注時間結束";
+"focus.break_time" = "休息時間";
+"focus.join_room" = "加入房間";
+"focus.create_room" = "建立房間";
+"focus.room_name" = "房間名稱";
+"focus.participants" = "參與者";
+"focus.focus_stats" = "專注統計";
+"focus.available_rooms" = "可用房間";
+"focus.create_first_room" = "建立你的第一個專注房間與他人一起學習";
+"focus.timer" = "計時器";
+"focus.rooms" = "房間";
+"focus.stats" = "統計";
+"focus.session" = "時段";
+"focus.no_rooms" = "暫無可用房間";
+"focus.participants_active" = "%d 名參與者活躍中";
+"focus.join" = "加入";
+"focus.today_stats" = "今日統計";
+"focus.sessions" = "時段";
+"focus.minutes" = "分鐘";
+"focus.weekly_overview" = "週統計總覽";
+"focus.achievements" = "成就";
+"focus.room_description" = "房間描述";
+"focus.room_name_placeholder" = "輸入房間名稱";
+"focus.room_description_placeholder" = "輸入房間描述";
+"focus.roomNamePlaceholder" = "輸入房間名稱";
+"focus.roomDescriptionPlaceholder" = "輸入房間描述";
+
+// MARK: - Focus Achievements
+"focus.achievement.first_focus" = "首次專注";
+"focus.achievement.first_focus_desc" = "完成您的第一次專注會話";
+"focus.achievement.daily_hero" = "每日英雄";
+"focus.achievement.daily_hero_desc" = "一天內完成4次會話";
+"focus.achievement.focus_master" = "專注大師";
+"focus.achievement.focus_master_desc" = "總共完成100次會話";
+"focus.achievement.early_bird" = "早起鳥";
+"focus.achievement.early_bird_desc" = "上午8點前開始會話";
+
+// MARK: - Focus Rooms
+"focus.room.study_together" = "一起學習";
+"focus.room.study_together_desc" = "專為學生和專業人士的專注學習會話";
+"focus.room.morning_productivity" = "晨間生產力";
+"focus.room.morning_productivity_desc" = "以高效的工作會話開始您的一天";
+"focus.room.deep_work_zone" = "深度工作區";
+"focus.room.deep_work_zone_desc" = "適合需要高度專注和集中注意力的人";
+"focus.room.creative_flow" = "創意流動";
+"focus.room.creative_flow_desc" = "完美適合創意工作和腦力激盪";
+
+// MARK: - Analytics
+"analytics.analytics" = "分析";
+"analytics.weekly_report" = "週報告";
+"analytics.monthly_report" = "月報告";
+"analytics.mood_trend" = "心情趨勢";
+"analytics.habit_progress" = "習慣進度";
+"analytics.focus_time" = "專注時間";
+"analytics.insights" = "洞察";
+"analytics.export_report" = "匯出報告";
+"analytics.share_report" = "分享報告";
+"analytics.overview" = "總覽";
+"analytics.journal_entries" = "日記條目";
+"analytics.avg_mood" = "平均心情";
+"analytics.habits_completed" = "完成習慣";
+"analytics.focus_minutes" = "專注分鐘";
+"analytics.mood_trends" = "心情趨勢";
+"analytics.see_details" = "查看詳情";
+"analytics.habits_performance" = "習慣表現";
+"analytics.journal_insights" = "日記洞察";
+"analytics.top_keywords" = "熱門關鍵字";
+"analytics.emotional_insights" = "情緒洞察";
+"analytics.week" = "週";
+"analytics.month" = "月";
+"analytics.quarter" = "季";
+"analytics.achievements" = "成就";
+"analytics.percent_completed" = "已完成 %d%%";
+"analytics.percent_change" = "變化 %d%%";
+"analytics.completed_days" = "%d/%d 天";
+
+// MARK: - Analytics Overview Subtitles
+"analytics.overview.journal_subtitle" = "本週 +%d";
+"analytics.overview.mood_subtitle" = "較上週 %@";
+"analytics.overview.focus_subtitle" = "較昨日 %@";
+
+// MARK: - Analytics Mock Data
+"analytics.habit.morning_exercise" = "晨間運動";
+"analytics.habit.daily_reading" = "每日閱讀";
+"analytics.habit.meditation" = "冥想";
+"analytics.habit.journal_writing" = "日記寫作";
+"analytics.weekly_report_title" = "第42週個人成長報告";
+"analytics.weekly_report_date" = "2024年10月16日 - 10月22日";
+"analytics.weekly_report_summary" = "本週展現出對個人成長的強烈承諾，在習慣一致性和情緒健康方面有顯著改善。您的日記實踐特別具有洞察力，揭示了成長和自我意識的模式。";
+"analytics.highlight.journal_completion" = "100% 日記完成率";
+"analytics.highlight.habit_consistency" = "86% 習慣一致性";
+"analytics.highlight.mood_trend" = "情緒趨勢：積極向上 ↗️";
+"analytics.ai_insights_sample" = "您一致的晨間例行程序似乎是維持積極情緒水平的關鍵因素。考慮探索冥想技巧來更有效地處理週中的壓力。";
+"analytics.emotional_insight_sample" = "本週顯示出整體積極的情緒趨勢，週中有一些壓力。由於持續的運動和與家人的優質時光，您的情緒在週末顯著改善。";
+
+// MARK: - Keywords
+"keyword.work" = "工作";
+"keyword.exercise" = "運動";
+"keyword.family" = "家庭";
+"keyword.reading" = "閱讀";
+"keyword.grateful" = "感恩";
+
+// MARK: - Profile
+"profile.profile" = "個人檔案";
+"profile.my_profile" = "我的檔案";
+"profile.settings" = "設定";
+"profile.about" = "關於";
+"profile.journal_entries" = "日記\n條目";
+"profile.current_streak" = "目前連續天數";
+"profile.completed_habits" = "已完成習慣";
+"profile.rate_app" = "為 Joury 評分";
+"profile.rate_app_subtitle" = "支持我們並給予評價";
+"profile.feedback" = "發送反饋";
+"profile.feedback_subtitle" = "幫助我們改進";
+"profile.privacy_policy" = "隱私政策";
+"profile.privacy_policy_subtitle" = "我們如何保護您的資料";
+"profile.statistics" = "統計資料";
+"profile.sign_out_confirmation" = "您確定要登出嗎？";
+
+// MARK: - Settings
+"settings.title" = "設定";
+"settings.welcome" = "設定";
+"settings.subtitle" = "自訂您的體驗";
+"settings.appearance" = "外觀";
+"settings.theme" = "主題";
+"settings.accent_color" = "強調色";
+"settings.language" = "語言";
+"settings.notifications" = "通知";
+"settings.enable_notifications" = "啟用通知";
+"settings.daily_reminders" = "每日提醒和洞察";
+"settings.morning_reminders" = "晨間提醒";
+"settings.start_day_reflection" = "以反思開始您的一天";
+"settings.evening_reminders" = "晚間提醒";
+"settings.end_day_reflection" = "以感恩結束您的一天";
+"settings.privacy_security" = "隱私與安全";
+"settings.app_lock" = "應用程式鎖定";
+"settings.require_authentication" = "需要生物辨識驗證";
+"settings.privacy_policy" = "隱私政策";
+"settings.how_we_protect" = "我們如何保護您的資料";
+"settings.data_management" = "資料管理";
+"settings.export_data" = "匯出資料";
+"settings.download_journal" = "下載您的日記條目";
+"settings.clear_cache" = "清除快取";
+"settings.free_storage" = "釋放儲存空間";
+"settings.about" = "關於";
+"settings.version" = "版本";
+"settings.feedback" = "發送反饋";
+"settings.help_improve" = "幫助我們改進 Joury";
+"settings.terms_of_service" = "服務條款";
+"settings.legal_information" = "法律資訊";
+"settings.appearance_language_notifications" = "外觀、語言和通知";
+
+// MARK: - Focus Phase
+"focus.workPhase" = "工作";
+"focus.shortBreak" = "短休息";
+"focus.longBreak" = "長休息";
+"focus.availableRooms" = "可用房間";
+"focus.noRooms" = "暫無房間";
+"focus.createFirstRoom" = "建立第一個房間";
+"focus.todayStats" = "今日統計";
+"focus.weeklyOverview" = "週統計總覽";
+"focus.roomName" = "房間名稱";
+"focus.roomDescription" = "房間描述";
+"focus.createRoom" = "建立房間";
+
+// MARK: - Mock Analytics Data
+"analytics.habit.morning_exercise" = "晨間運動";
+"analytics.habit.daily_reading" = "每日閱讀";
+"analytics.habit.meditation" = "冥想";
+"analytics.habit.journal_writing" = "日記書寫";
+"analytics.emotional_insight_sample" = "本週整體展現了積極的情緒趨勢，儘管週中有些壓力。由於堅持運動和與家人共度美好時光，您的心情在週末顯著改善。";
+"analytics.weekly_report_title" = "第42週個人成長報告";
+"analytics.weekly_report_date" = "2024年10月16日 - 10月22日";
+"analytics.weekly_report_summary" = "本週在個人成長方面表現出強烈的承諾，在習慣一致性和情緒健康方面有明顯改善。您的日記實踐特別具有洞察力，揭示了成長和自我意識的模式。";
+"analytics.highlight.journal_completion" = "100% 日記完成率";
+"analytics.highlight.habit_consistency" = "86% 習慣一致性";
+"analytics.highlight.mood_trend" = "心情趨勢：積極 ↗️";
+"analytics.ai_insights_sample" = "您一致的晨間例行公事似乎是維持積極心情水平的關鍵因素。考慮探索冥想技巧以更有效地處理週中壓力。";
+
+// MARK: - Mock Focus Rooms
+"focus.room.study_together" = "一起學習";
+"focus.room.study_together_desc" = "為學生和專業人士提供的專注學習時段";
+"focus.room.morning_productivity" = "晨間生產力";
+"focus.room.morning_productivity_desc" = "以高效的工作時段開始您的一天";
+"focus.room.deep_work_zone" = "深度工作區";
+"focus.room.deep_work_zone_desc" = "適合需要高度專注和集中力的人";
+"focus.room.creative_flow" = "創意流動";
+"focus.room.creative_flow_desc" = "適合創意工作和腦力激盪";
+
+// MARK: - Focus Achievements
+"focus.achievement.first_focus" = "首次專注";
+"focus.achievement.first_focus_desc" = "完成您的第一個專注時段";
+"focus.achievement.daily_hero" = "每日英雄";
+"focus.achievement.daily_hero_desc" = "一天內完成4個時段";
+"focus.achievement.focus_master" = "專注大師";
+"focus.achievement.focus_master_desc" = "完成總共100個時段";
+"focus.achievement.early_bird" = "早起鳥";
+"focus.achievement.early_bird_desc" = "在上午8點前開始時段";
+
+// MARK: - Journal Reflection Questions
+"journal.reflection.feeling_now" = "您現在感覺如何？";
+"journal.reflection.mind_today" = "今天您在想什麼？";
+"journal.reflection.grateful_for" = "您感謝什麼？";
+"journal.reflection.focus_on" = "您想專注於什麼？";
+"journal.fallback_response" = "抱歉，我現在無法回應。請稍後再試。";
+
+// MARK: - Weekday Labels
+"weekday.monday" = "週一";
+"weekday.tuesday" = "週二";
+"weekday.wednesday" = "週三";
+"weekday.thursday" = "週四";
+"weekday.friday" = "週五";
+"weekday.saturday" = "週六";
+"weekday.sunday" = "週日";
+
+// MARK: - Keywords for Analytics
+"keyword.work" = "工作";
+"keyword.exercise" = "運動";
+"keyword.family" = "家庭";
+"keyword.reading" = "閱讀";
+"keyword.grateful" = "感恩";
+"profile.rate_app_subtitle" = "幫助其他人發現 Joury";
+"profile.feedback" = "提供回饋";
+"profile.feedback_subtitle" = "幫助我們改進";
+"profile.privacy_policy" = "隱私權政策";
+"profile.terms_of_service" = "服務條款";
+"profile.terms_of_service_subtitle" = "法律資訊和條款";
+"profile.sign_out_subtitle" = "您需要重新登入";
+"profile.sign_in_subtitle" = "存取所有功能";
+"profile.edit_profile" = "編輯檔案";
+"profile.name" = "姓名";
+"profile.email" = "電子郵件";
+"profile.avatar" = "頭像";
+"profile.preferences" = "偏好設定";
+"profile.notifications" = "通知";
+"profile.privacy" = "隱私";
+"profile.version" = "版本";
+"profile.support" = "支援";
+"profile.statistics" = "統計資料";
+"profile.sign_out_confirmation" = "您確定要登出嗎？";
+
+// MARK: - Settings
+"settings.settings" = "設定";
+"settings.title" = "設定";
+"settings.welcome" = "個人化您的體驗";
+"settings.subtitle" = "調整 Joury 以符合您的偏好";
+"settings.appearance" = "外觀";
+"settings.theme" = "主題";
+"settings.accent_color" = "強調色";
+"settings.accent_colors" = "主色調";
+"settings.color_preview" = "目前的色彩配置";
+"settings.language" = "語言";
+"settings.notifications" = "通知";
+"settings.enable_notifications" = "啟用通知";
+"settings.daily_reminders" = "接收溫和的每日提醒";
+"settings.morning_reminders" = "晨間提醒";
+"settings.start_day_reflection" = "以反思開始您的一天";
+"settings.evening_reminders" = "晚間提醒";
+"settings.end_day_reflection" = "以感恩結束您的一天";
+"settings.habit_reminders" = "習慣提醒";
+"settings.habit_reminders_subtitle" = "您的習慣追蹤目標提醒";
+
+// MARK: - Journal Mode Selection
+"journal.mode.traditional" = "傳統模式";
+"journal.mode.interactive" = "互動模式";
+"journal.mode.traditional.description" = "自由書寫，AI 在旁協助";
+"journal.mode.interactive.description" = "對話式日記創作";
+
+// MARK: - Traditional Journal
+"journal.traditional.title" = "今日日記";
+"journal.traditional.placeholder" = "分享您今天的想法、感受和經歷。什麼讓您微笑？什麼挑戰了您？自由書寫吧...";
+"journal.ai.assistant" = "AI 助手";
+"journal.ai.analyzing" = "正在生成建議...";
+"journal.ai.suggestion.1" = "今天的事件讓您有什麼感受？";
+"journal.ai.suggestion.2" = "今天最精彩的時刻是什麼？";
+"journal.ai.suggestion.3" = "明天有什麼想要改進的地方嗎？";
+"journal.characters" = "字元";
+
+// MARK: - Interactive Journal  
+"journal.interactive.title" = "互動日記";
+"journal.interactive.welcome" = "讓我們一起反思";
+"journal.interactive.subtitle" = "我在這裡引導您思考，幫助您發現關於今天的深刻見解。";
+"journal.interactive.placeholder" = "分享您心中所想...";
+
+// MARK: - Journal Common
+"journal.mood" = "心情";
+"journal.past_journals" = "過往日記";
+"journal.no_active_session" = "無活躍的日記會話";
+"common.loading" = "載入中...";
+"common.save" = "儲存";
+"settings.reflect_day" = "反思您的一天";
+"settings.privacy_security" = "隱私與安全";
+"settings.app_lock" = "應用程式鎖定";
+"settings.require_authentication" = "需要 Face ID 或 Touch ID";
+"settings.biometric_auth_reason" = "驗證以存取 Joury";
+"settings.privacy_policy" = "隱私權政策";
+"settings.how_we_protect" = "我們如何保護您的資料";
+"settings.ai_analysis" = "AI 分析";
+"settings.ai_analysis_subtitle" = "允許 AI 分析您的條目以獲得洞察";
+"settings.icloud_sync" = "iCloud 同步";
+"settings.icloud_sync_subtitle" = "在裝置間同步您的資料";
+"settings.data_management" = "資料管理";
+"settings.export_data" = "匯出資料";
+"settings.download_journal" = "下載您的日記條目";
+"settings.clear_cache" = "清除快取";
+"settings.free_storage" = "釋放儲存空間";
+"settings.delete_all_data" = "刪除所有資料";
+"settings.delete_data_warning" = "這將永久刪除您的所有資料";
+"settings.about" = "關於";
+"settings.version" = "版本";
+"settings.feedback" = "提供回饋";
+"settings.help_improve" = "幫助我們改進 Joury";
+"settings.terms_of_service" = "服務條款";
+"settings.legal_information" = "法律資訊";
+"settings.privacy" = "隱私";
+"settings.security" = "安全";
+"settings.data_export" = "資料匯出";
+"settings.delete_account" = "刪除帳號";
+"settings.restart_required" = "需要重新啟動";
+"settings.restart_message" = "請重新啟動應用程式以套用語言變更。";
+"settings.language_changed" = "語言已變更";
+"settings.language_change_message" = "應用程式將重新載入以套用語言變更。";
+"settings.appearance_language_notifications" = "外觀、語言與通知";
+
+// MARK: - Days of Week
+"weekday.monday" = "週一";
+"weekday.tuesday" = "週二";
+"weekday.wednesday" = "週三";
+"weekday.thursday" = "週四";
+"weekday.friday" = "週五";
+"weekday.saturday" = "週六";
+"weekday.sunday" = "週日";
+
+// MARK: - Errors
+"errors.network_error" = "網路錯誤";
+"errors.server_error" = "伺服器錯誤";
+"errors.validation_error" = "驗證錯誤";
+"errors.unknown_error" = "未知錯誤";
+"errors.permission_denied" = "權限被拒絕";
+"errors.file_not_found" = "檔案未找到";
+"errors.authentication_failed" = "認證失敗";
+"errors.google_auth_failed" = "Google 認證失敗";
+
+// MARK: - Notifications
+"notifications.daily_reflection" = "每日反思提醒";
+"notifications.habit_reminder" = "習慣提醒";
+"notifications.focus_session" = "專注時段提醒";
+"notifications.weekly_report" = "您的週報告已準備完成";
+"notifications.permission" = "通知權限";
+"notifications.settings" = "通知設定"; 
+
+// MARK: - Privacy Notice (hardcoded string found)
+"privacy_notice" = "繼續使用即表示您同意我們的隱私政策和服務條款。您的資料安全且私密。"; 

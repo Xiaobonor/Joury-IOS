@@ -9,6 +9,21 @@ import Foundation
 import SwiftUI
 import Combine
 
+// MARK: - App Reloader
+
+class AppReloader: ObservableObject {
+    static let shared = AppReloader()
+    @Published var reloadTrigger = UUID()
+    
+    private init() {}
+    
+    func reload() {
+        DispatchQueue.main.async {
+            self.reloadTrigger = UUID()
+        }
+    }
+}
+
 // MARK: - Supported Languages
 
 enum Language: String, CaseIterable {
@@ -25,11 +40,12 @@ enum Language: String, CaseIterable {
     }
     
     var localizedDisplayName: String {
+        let localizationManager = LocalizationManager()
         switch self {
         case .traditionalChinese:
-            return NSLocalizedString("language.zh_tw", comment: "Traditional Chinese")
+            return localizationManager.string(for: "language.zh_tw")
         case .english:
-            return NSLocalizedString("language.en", comment: "English")
+            return localizationManager.string(for: "language.en")
         }
     }
     
@@ -46,12 +62,16 @@ enum Language: String, CaseIterable {
     }
 }
 
+// MARK: - Type Aliases
+typealias SupportedLanguage = Language
+
 // MARK: - Localization Manager
 
 class LocalizationManager: ObservableObject {
     @Published var currentLanguage: Language = .system
     
     private var bundle: Bundle = Bundle.main
+    private let appReloader = AppReloader.shared
     
     init() {
         loadLanguagePreference()
@@ -68,20 +88,50 @@ class LocalizationManager: ObservableObject {
     }
     
     func setLanguage(_ language: Language) {
+        guard currentLanguage != language else { return }
+        
         currentLanguage = language
         UserDefaults.standard.set(language.rawValue, forKey: AppConfig.UserDefaultsKeys.preferredLanguage)
         updateBundle()
+        
+        // Set the app language in UserDefaults for the system to pick up
+        UserDefaults.standard.set([language.rawValue], forKey: "AppleLanguages")
+        UserDefaults.standard.synchronize()
+        
+        // Force immediate UI update for the current language change
+        DispatchQueue.main.async {
+            self.objectWillChange.send()
+        }
+        
+        // Trigger app reload for complete language change
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.appReloader.reload()
+        }
     }
     
     private func updateBundle() {
-        // String Catalogs automatically handle bundle resolution
-        // No need for manual bundle switching with String Catalogs
-        self.bundle = Bundle.main
+        // Find the bundle for the selected language
+        guard let path = Bundle.main.path(forResource: currentLanguage.rawValue, ofType: "lproj"),
+              let bundle = Bundle(path: path) else {
+            // Fallback to main bundle if language bundle not found
+            self.bundle = Bundle.main
+            return
+        }
+        
+        self.bundle = bundle
     }
     
     func string(for key: String, comment: String = "") -> String {
-        // With String Catalogs, use the main bundle directly
-        return NSLocalizedString(key, bundle: bundle, comment: comment)
+        // Use the language-specific bundle to load localized strings
+        let localizedString = NSLocalizedString(key, bundle: bundle, comment: comment)
+        
+        // If the localized string is the same as the key, it means translation wasn't found
+        // Fall back to main bundle (typically English)
+        if localizedString == key {
+            return NSLocalizedString(key, bundle: Bundle.main, comment: comment)
+        }
+        
+        return localizedString
     }
     
     func string(for key: String, arguments: CVarArg...) -> String {
@@ -122,8 +172,12 @@ struct LocalizationKeys {
         static let continueAsGuest = "auth.continue_as_guest"
         static let welcome = "auth.welcome"
         static let welcomeMessage = "auth.welcome_message"
+        static let welcomeSubtitle = "auth.welcome_subtitle"
+        static let privacyNotice = "auth.privacy_notice"
         static let signInRequired = "auth.sign_in_required"
         static let signInRequiredMessage = "auth.sign_in_required_message"
+        static let guest = "auth.guest"
+        static let guestEmail = "auth.guest_email"
     }
     
     // MARK: - Journal
@@ -141,6 +195,14 @@ struct LocalizationKeys {
         static let entryCreated = "journal.entry_created"
         static let entryUpdated = "journal.entry_updated"
         static let entryDeleted = "journal.entry_deleted"
+        static let quickActionDayQuestion = "journal.quick_action_day_question"
+        static let quickActionGratitude = "journal.quick_action_gratitude"
+        static let quickActionMind = "journal.quick_action_mind"
+        static let quickActionGoals = "journal.quick_action_goals"
+        static let quickActionDayResponse = "journal.quick_action_day_response"
+        static let quickActionGratitudeResponse = "journal.quick_action_gratitude_response"
+        static let quickActionMindResponse = "journal.quick_action_mind_response"
+        static let quickActionGoalsResponse = "journal.quick_action_goals_response"
     }
     
     // MARK: - Habits
@@ -192,12 +254,37 @@ struct LocalizationKeys {
         static let insights = "analytics.insights"
         static let exportReport = "analytics.export_report"
         static let shareReport = "analytics.share_report"
+        static let overview = "analytics.overview"
+        static let journalEntries = "analytics.journal_entries"
+        static let avgMood = "analytics.avg_mood"
+        static let habitsCompleted = "analytics.habits_completed"
+        static let focusMinutes = "analytics.focus_minutes"
+        static let moodTrends = "analytics.mood_trends"
+        static let seeDetails = "analytics.see_details"
+        static let habitsPerformance = "analytics.habits_performance"
+        static let journalInsights = "analytics.journal_insights"
+        static let topKeywords = "analytics.top_keywords"
+        static let emotionalInsights = "analytics.emotional_insights"
+        static let week = "analytics.week"
+        static let month = "analytics.month"
+        static let quarter = "analytics.quarter"
     }
     
     // MARK: - Profile
     struct Profile {
         static let profile = "profile.profile"
         static let myProfile = "profile.my_profile"
+        static let settings = "profile.settings"
+        static let about = "profile.about"
+        static let journalEntries = "profile.journal_entries"
+        static let currentStreak = "profile.current_streak"
+        static let completedHabits = "profile.completed_habits"
+        static let rateApp = "profile.rate_app"
+        static let rateAppSubtitle = "profile.rate_app_subtitle"
+        static let feedback = "profile.feedback"
+        static let feedbackSubtitle = "profile.feedback_subtitle"
+        static let privacyPolicy = "profile.privacy_policy"
+        static let termsOfService = "profile.terms_of_service"
         static let editProfile = "profile.edit_profile"
         static let name = "profile.name"
         static let email = "profile.email"
@@ -205,22 +292,79 @@ struct LocalizationKeys {
         static let preferences = "profile.preferences"
         static let notifications = "profile.notifications"
         static let privacy = "profile.privacy"
-        static let about = "profile.about"
         static let version = "profile.version"
         static let support = "profile.support"
-        static let feedback = "profile.feedback"
     }
     
     // MARK: - Settings
     struct Settings {
         static let settings = "settings.settings"
-        static let language = "settings.language"
+        static let title = "settings.title"
+        static let welcome = "settings.welcome"
+        static let subtitle = "settings.subtitle"
+        static let appearance = "settings.appearance"
         static let theme = "settings.theme"
+        static let accentColor = "settings.accent_color"
+        static let language = "settings.language"
         static let notifications = "settings.notifications"
+        static let enableNotifications = "settings.enable_notifications"
+        static let dailyReminders = "settings.daily_reminders"
+        static let morningReminders = "settings.morning_reminders"
+        static let startDayReflection = "settings.start_day_reflection"
+        static let eveningReminders = "settings.evening_reminders"
+        static let endDayReflection = "settings.end_day_reflection"
+        static let privacySecurity = "settings.privacy_security"
+        static let appLock = "settings.app_lock"
+        static let requireAuthentication = "settings.require_authentication"
+        static let privacyPolicy = "settings.privacy_policy"
+        static let howWeProtect = "settings.how_we_protect"
+        static let dataManagement = "settings.data_management"
+        static let exportData = "settings.export_data"
+        static let downloadJournal = "settings.download_journal"
+        static let clearCache = "settings.clear_cache"
+        static let freeStorage = "settings.free_storage"
+        static let about = "settings.about"
+        static let version = "settings.version"
+        static let feedback = "settings.feedback"
+        static let helpImprove = "settings.help_improve"
+        static let termsOfService = "settings.terms_of_service"
+        static let legalInformation = "settings.legal_information"
         static let privacy = "settings.privacy"
         static let security = "settings.security"
         static let dataExport = "settings.data_export"
         static let deleteAccount = "settings.delete_account"
+        static let restartRequired = "settings.restart_required"
+        static let restartMessage = "settings.restart_message"
+        static let languageChanged = "settings.language_changed"
+        static let languageChangeMessage = "settings.language_change_message"
+    }
+    
+    // MARK: - Common
+    struct Common {
+        static let back = "common.back"
+        static let ok = "common.ok"
+        static let cancel = "common.cancel"
+        static let save = "common.save"
+        static let delete = "common.delete"
+        static let edit = "common.edit"
+        static let done = "common.done"
+        static let next = "common.next"
+        static let skip = "common.skip"
+        static let retry = "common.retry"
+        static let loading = "common.loading"
+        static let error = "common.error"
+        static let success = "common.success"
+        static let warning = "common.warning"
+        static let info = "common.info"
+        static let signIn = "common.sign_in"
+        static let signOut = "common.sign_out"
+    }
+    
+    // MARK: - Theme
+    struct Theme {
+        static let light = "theme.light"
+        static let dark = "theme.dark"
+        static let auto = "theme.auto"
     }
     
     // MARK: - Errors
@@ -232,6 +376,7 @@ struct LocalizationKeys {
         static let permissionDenied = "errors.permission_denied"
         static let fileNotFound = "errors.file_not_found"
         static let authenticationFailed = "errors.authentication_failed"
+        static let googleAuthFailed = "errors.google_auth_failed"
     }
     
     // MARK: - Notifications
@@ -249,7 +394,8 @@ struct LocalizationKeys {
 
 extension String {
     var localized: String {
-        return NSLocalizedString(self, comment: "")
+        let localizationManager = LocalizationManager()
+        return localizationManager.string(for: self)
     }
     
     func localized(with arguments: CVarArg...) -> String {

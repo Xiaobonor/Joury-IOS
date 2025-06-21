@@ -2,235 +2,119 @@
 //  JournalView.swift
 //  Joury
 //
-//  Main view for interactive AI journaling.
+//  Redesigned immersive journal view with quick access to writing and history.
 //
 
 import SwiftUI
 import Combine
 
 struct JournalView: View {
-    @StateObject private var viewModel = JournalViewModel()
+    let initialMode: JournalMode
+    
     @EnvironmentObject private var themeManager: ThemeManager
-    @EnvironmentObject private var authManager: AuthenticationManager
-    @State private var messageText = ""
-    @State private var isTyping = false
+    @EnvironmentObject private var localizationManager: LocalizationManager
+    @StateObject private var viewModel = JournalViewModel()
+    @Environment(\.presentationMode) var presentationMode
+    
+    @State private var selectedMode: JournalMode
+    @State private var animateEntrance = false
+    @State private var traditionalText = ""
+    
+    init(initialMode: JournalMode = .interactive) {
+        self.initialMode = initialMode
+        self._selectedMode = State(initialValue: initialMode)
+    }
     
     var body: some View {
-        NavigationView {
-            VStack(spacing: 0) {
-                // Header
-                headerView
-                
-                // Messages List
-                messagesScrollView
-                
-                // Input Bar
-                inputBar
-            }
-            .background(themeManager.colors.background)
-            .navigationTitle("journal.journal".localized)
-            .navigationBarTitleDisplayMode(.large)
-            .task {
+        ZStack {
+            // Background
+            themeManager.colors.background
+                .ignoresSafeArea()
+            
+            // Writing Interface
+            writingInterface
+                .opacity(animateEntrance ? 1 : 0)
+                .scaleEffect(animateEntrance ? 1 : 0.95)
+        }
+        .onAppear {
+            Task {
                 await viewModel.loadTodayJournal()
+                traditionalText = viewModel.todayJournalText ?? ""
+            }
+            withAnimation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.2)) {
+                animateEntrance = true
             }
         }
     }
     
-    // MARK: - Header View
-    private var headerView: some View {
-        VStack(spacing: 8) {
-            HStack {
-                Text(Date().formatted(date: .abbreviated, time: .omitted))
-                    .font(.headline)
-                    .foregroundColor(themeManager.colors.textPrimary)
-                
-                Spacer()
-                
-                // Mood Indicator
-                if let currentMood = viewModel.currentMoodScore {
-                    HStack(spacing: 4) {
-                        Image(systemName: moodIcon(for: currentMood))
-                            .foregroundColor(moodColor(for: currentMood))
-                        Text(String(format: "%.1f", currentMood))
-                            .font(.caption)
-                            .foregroundColor(themeManager.colors.textSecondary)
+
+    
+    // MARK: - Writing Interface
+    private var writingInterface: some View {
+        ZStack {
+            if selectedMode == .traditional {
+                TraditionalWritingView(
+                    text: $traditionalText,
+                    onSave: { content in
+                        Task {
+                            await viewModel.saveTraditionalEntry(content)
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    },
+                    onCancel: {
+                        presentationMode.wrappedValue.dismiss()
                     }
-                }
-            }
-            .padding(.horizontal)
-            
-            if viewModel.isLoading {
-                ProgressView()
-                    .scaleEffect(0.8)
-            }
-        }
-        .padding(.vertical, 8)
-        .background(themeManager.colors.surface)
-    }
-    
-    // MARK: - Messages Scroll View
-    private var messagesScrollView: some View {
-        ScrollViewReader { proxy in
-            ScrollView {
-                LazyVStack(spacing: 12) {
-                    ForEach(viewModel.messages, id: \.id) { message in
-                        MessageBubbleView(
-                            message: message,
-                            isFromUser: message.isFromUser
-                        )
-                        .id(message.id)
+                )
+            } else {
+                InteractiveWritingView(
+                    messages: viewModel.messages,
+                    isLoading: viewModel.isLoading,
+                    onSendMessage: { message in
+                        Task {
+                            await viewModel.sendMessage(message)
+                        }
+                    },
+                    onCancel: {
+                        presentationMode.wrappedValue.dismiss()
                     }
-                    
-                    // AI typing indicator
-                    if isTyping {
-                        TypingIndicatorView()
-                            .id("typing")
-                    }
-                }
-                .padding()
-            }
-            .onChange(of: viewModel.messages.count) { _ in
-                withAnimation(.easeOut(duration: 0.3)) {
-                    if let lastMessage = viewModel.messages.last {
-                        proxy.scrollTo(lastMessage.id, anchor: .bottom)
-                    }
-                }
-            }
-            .onChange(of: isTyping) { typing in
-                if typing {
-                    withAnimation(.easeOut(duration: 0.3)) {
-                        proxy.scrollTo("typing", anchor: .bottom)
-                    }
-                }
+                )
             }
         }
     }
-    
-    // MARK: - Input Bar
-    private var inputBar: some View {
-        VStack(spacing: 8) {
-            // Quick Action Buttons
-            if viewModel.messages.isEmpty {
-                quickActionButtons
-            }
-            
-            // Text Input
-            HStack(spacing: 12) {
-                HStack {
-                    TextField("journal.your_thoughts".localized, text: $messageText, axis: .vertical)
-                        .textFieldStyle(PlainTextFieldStyle())
-                        .font(.body)
-                        .lineLimit(1...4)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 8)
-                }
-                .background(themeManager.colors.surface)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                
-                Button(action: sendMessage) {
-                    Image(systemName: "arrow.up.circle.fill")
-                        .font(.title2)
-                        .foregroundColor(messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? 
-                                       themeManager.colors.textSecondary : themeManager.colors.primary)
-                }
-                .disabled(messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || viewModel.isLoading)
-            }
-            .padding(.horizontal)
-            .padding(.bottom, 8)
-        }
-        .background(themeManager.colors.background)
-    }
-    
-    // MARK: - Quick Action Buttons
-    private var quickActionButtons: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 12) {
-                QuickActionButton(
-                    title: "How was your day?",
-                    icon: "sun.max"
-                ) {
-                    messageText = "How was your day?"
-                    sendMessage()
-                }
-                
-                QuickActionButton(
-                    title: "What am I grateful for?",
-                    icon: "heart"
-                ) {
-                    messageText = "What am I grateful for today?"
-                    sendMessage()
-                }
-                
-                QuickActionButton(
-                    title: "What's on my mind?",
-                    icon: "brain.head.profile"
-                ) {
-                    messageText = "What's on my mind right now?"
-                    sendMessage()
-                }
-                
-                QuickActionButton(
-                    title: "Goals for tomorrow",
-                    icon: "target"
-                ) {
-                    messageText = "What are my goals for tomorrow?"
-                    sendMessage()
-                }
-            }
-            .padding(.horizontal)
-        }
-    }
-    
-    // MARK: - Helper Functions
-    private func sendMessage() {
-        let text = messageText.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !text.isEmpty else { return }
-        
-        messageText = ""
-        isTyping = true
-        
-        Task {
-            await viewModel.sendMessage(text)
-            await MainActor.run {
-                isTyping = false
-            }
-        }
-    }
-    
-    private func moodIcon(for score: Double) -> String {
-        switch score {
-        case 0..<3: return "cloud.rain"
-        case 3..<5: return "cloud"
-        case 5..<7: return "cloud.sun"
-        case 7..<9: return "sun.max"
-        default: return "sun.max.fill"
-        }
-    }
-    
-    private func moodColor(for score: Double) -> Color {
-        switch score {
-        case 0..<3: return .blue
-        case 3..<5: return .gray
-        case 5..<7: return .orange
-        case 7..<9: return .yellow
-        default: return .green
-        }
-    }
+
 }
 
-// MARK: - Message Bubble View
+// MARK: - Supporting Views
+
 struct MessageBubbleView: View {
     let message: JournalMessage
     let isFromUser: Bool
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        HStack {
+        HStack(alignment: .bottom, spacing: 8) {
             if isFromUser {
-                Spacer(minLength: 60)
+                Spacer(minLength: 50)
+            } else {
+                // AI avatar
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [themeManager.colors.primary, themeManager.colors.primary.opacity(0.7)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 32, height: 32)
+                    .overlay(
+                        Image(systemName: "sparkles")
+                            .font(.system(size: 14, weight: .medium))
+                            .foregroundColor(.white)
+                    )
+                    .shadow(color: themeManager.colors.primary.opacity(0.3), radius: 4, x: 0, y: 2)
             }
             
-            VStack(alignment: isFromUser ? .trailing : .leading, spacing: 4) {
+            VStack(alignment: isFromUser ? .trailing : .leading, spacing: 6) {
                 Text(message.content)
                     .font(.body)
                     .foregroundColor(isFromUser ? .white : themeManager.colors.textPrimary)
@@ -238,58 +122,63 @@ struct MessageBubbleView: View {
                     .padding(.vertical, 12)
                     .background(
                         RoundedRectangle(cornerRadius: 18)
-                            .fill(isFromUser ? themeManager.colors.primary : themeManager.colors.surface)
+                            .fill(
+                                isFromUser ?
+                                LinearGradient(
+                                    colors: [themeManager.colors.primary, themeManager.colors.primary.opacity(0.8)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ) :
+                                LinearGradient(
+                                    colors: [themeManager.colors.surface, themeManager.colors.surface],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                            .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
                     )
                 
                 Text(message.timestamp.formatted(date: .omitted, time: .shortened))
                     .font(.caption2)
                     .foregroundColor(themeManager.colors.textSecondary)
+                    .padding(.horizontal, 4)
             }
             
             if !isFromUser {
-                Spacer(minLength: 60)
+                Spacer(minLength: 50)
             }
         }
     }
 }
 
-// MARK: - Quick Action Button
-struct QuickActionButton: View {
-    let title: String
-    let icon: String
-    let action: () -> Void
-    @EnvironmentObject private var themeManager: ThemeManager
-    
-    var body: some View {
-        Button(action: action) {
-            HStack(spacing: 8) {
-                Image(systemName: icon)
-                    .font(.caption)
-                Text(title)
-                    .font(.caption)
-                    .fontWeight(.medium)
-            }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            .background(themeManager.colors.surface)
-            .foregroundColor(themeManager.colors.textPrimary)
-            .clipShape(RoundedRectangle(cornerRadius: 16))
-        }
-    }
-}
-
-// MARK: - Typing Indicator
 struct TypingIndicatorView: View {
     @State private var animationOffset: CGFloat = 0
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        HStack {
-            HStack(spacing: 4) {
+        HStack(alignment: .bottom, spacing: 8) {
+            // AI avatar
+            Circle()
+                .fill(
+                    LinearGradient(
+                        colors: [themeManager.colors.primary, themeManager.colors.primary.opacity(0.7)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .frame(width: 32, height: 32)
+                .overlay(
+                    Image(systemName: "sparkles")
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundColor(.white)
+                )
+                .shadow(color: themeManager.colors.primary.opacity(0.3), radius: 4, x: 0, y: 2)
+            
+            HStack(spacing: 6) {
                 ForEach(0..<3) { index in
                     Circle()
                         .fill(themeManager.colors.textSecondary)
-                        .frame(width: 6, height: 6)
+                        .frame(width: 8, height: 8)
                         .offset(y: animationOffset)
                         .animation(
                             Animation.easeInOut(duration: 0.6)
@@ -301,10 +190,13 @@ struct TypingIndicatorView: View {
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
-            .background(themeManager.colors.surface)
-            .clipShape(RoundedRectangle(cornerRadius: 18))
+            .background(
+                RoundedRectangle(cornerRadius: 18)
+                    .fill(themeManager.colors.surface)
+                    .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
+            )
             
-            Spacer(minLength: 60)
+            Spacer(minLength: 50)
         }
         .onAppear {
             animationOffset = -4
@@ -312,8 +204,137 @@ struct TypingIndicatorView: View {
     }
 }
 
+// MARK: - Writing Views
+
+struct TraditionalWritingView: View {
+    @Binding var text: String
+    let onSave: (String) -> Void
+    let onCancel: () -> Void
+    
+    @EnvironmentObject private var themeManager: ThemeManager
+    @EnvironmentObject private var localizationManager: LocalizationManager
+    @FocusState private var isTextFieldFocused: Bool
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            // Header
+            HStack {
+                Button(localizationManager.string(for: "common.cancel"), action: onCancel)
+                    .foregroundColor(themeManager.colors.textSecondary)
+                
+                Spacer()
+                
+                Text(localizationManager.string(for: "journal.traditional.title"))
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(themeManager.colors.textPrimary)
+                
+                Spacer()
+                
+                Button(localizationManager.string(for: "common.save")) {
+                    onSave(text)
+                }
+                .foregroundColor(themeManager.colors.primary)
+                .fontWeight(.semibold)
+            }
+            .padding()
+            .background(themeManager.colors.surface)
+            
+            // Writing Area
+            TextEditor(text: $text)
+                .focused($isTextFieldFocused)
+                .font(.body)
+                .padding()
+                .background(themeManager.colors.background)
+        }
+        .onAppear {
+            isTextFieldFocused = true
+        }
+    }
+}
+
+struct InteractiveWritingView: View {
+    let messages: [JournalMessage]
+    let isLoading: Bool
+    let onSendMessage: (String) -> Void
+    let onCancel: () -> Void
+    
+    @EnvironmentObject private var themeManager: ThemeManager
+    @EnvironmentObject private var localizationManager: LocalizationManager
+    @State private var inputText = ""
+    @FocusState private var isInputFocused: Bool
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            // Header
+            HStack {
+                Button(localizationManager.string(for: "common.cancel"), action: onCancel)
+                    .foregroundColor(themeManager.colors.textSecondary)
+                
+                Spacer()
+                
+                Text(localizationManager.string(for: "journal.interactive.title"))
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(themeManager.colors.textPrimary)
+                
+                Spacer()
+                
+                Button(localizationManager.string(for: "common.done"), action: onCancel)
+                    .foregroundColor(themeManager.colors.primary)
+                    .fontWeight(.semibold)
+            }
+            .padding()
+            .background(themeManager.colors.surface)
+            
+            // Messages
+            ScrollView {
+                LazyVStack(spacing: 16) {
+                    ForEach(messages) { message in
+                        MessageBubbleView(message: message, isFromUser: message.isFromUser)
+                    }
+                    
+                    if isLoading {
+                        TypingIndicatorView()
+                    }
+                }
+                .padding()
+            }
+            
+            // Input
+            HStack(spacing: 12) {
+                TextField(localizationManager.string(for: "journal.interactive.placeholder"), text: $inputText)
+                    .focused($isInputFocused)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                
+                Button(action: sendMessage) {
+                    Image(systemName: "arrow.up.circle.fill")
+                        .font(.title2)
+                        .foregroundColor(inputText.isEmpty ? themeManager.colors.textSecondary : themeManager.colors.primary)
+                }
+                .disabled(inputText.isEmpty)
+            }
+            .padding()
+            .background(themeManager.colors.surface)
+        }
+        .onAppear {
+            isInputFocused = true
+        }
+    }
+    
+    private func sendMessage() {
+        guard !inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
+        onSendMessage(inputText)
+        inputText = ""
+    }
+}
+
+
+
+// MARK: - Preview
+
 #Preview {
     JournalView()
         .environmentObject(ThemeManager())
-        .environmentObject(AuthenticationManager())
+        .environmentObject(LocalizationManager())
 } 
